@@ -31,7 +31,7 @@ import image_add from "./assets/image_add.png"
 
 
 
-export default function App() {
+export default function EditRoom() {
   const [date1, setDate1] = useState(new Date(1598051730000));
   const [date2, setDate2] = useState(new Date(1598051730000));
 
@@ -55,7 +55,7 @@ export default function App() {
           <TouchableOpacity style = {styles.backArrow}>
             <Image style={styles.arrow} source={Vector}/>
           </TouchableOpacity>
-          <Text style = {styles.title}>방 수정하기</Text>
+          <Text style = {styles.title}>수정하기</Text>
         </View>
       </View>
       <View style = {styles.components}>

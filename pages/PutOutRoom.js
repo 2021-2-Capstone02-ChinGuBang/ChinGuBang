@@ -31,7 +31,7 @@ import image_add from "./assets/image_add.png"
 
 
 
-export default function App() {
+export default function PutOutRoom() {
   const [date1, setDate1] = useState(new Date(1598051730000));
   const [date2, setDate2] = useState(new Date(1598051730000));
 
