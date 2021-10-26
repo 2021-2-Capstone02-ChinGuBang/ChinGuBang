@@ -2,7 +2,6 @@ import { StatusBar } from 'expo-status-bar';
 import React,{useState} from 'react';
 import { TouchableOpacity,ScrollView,StyleSheet, Text,Image, View, TextInput, Button } from 'react-native';
 
-import {Entypo} from '@expo/vector-icons'
 import Vector from './assets/Vector.png'
 import RedButton from './components/RedButton'
 import OptionButton from './components/OptionButton'
@@ -25,9 +24,7 @@ import tv from "./assets/tv.png"
 import cctv from "./assets/cctv.png"
 import parking from "./assets/parking.png"
 import elevator from "./assets/elevator.png"
-import add from "./assets/add.png"
-import vr_image from "./assets/vr_image.png"
-import image_add from "./assets/image_add.png"
+
 
 
 
@@ -55,7 +52,7 @@ export default function App() {
           <TouchableOpacity style = {styles.backArrow}>
             <Image style={styles.arrow} source={Vector}/>
           </TouchableOpacity>
-          <Text style = {styles.title}>방 내놓기</Text>
+          <Text style = {styles.title}>전체 필터</Text>
         </View>
       </View>
       <View style = {styles.components}>
@@ -115,27 +112,25 @@ export default function App() {
         </View>
       </View>
       <View style = {styles.components}>
-        <Text style={styles.subTitle}>주소 입력</Text>
-        <TouchableOpacity style={styles.address}>
-          <Entypo name="magnifying-glass" size={24} color="black" style={{
-            alignSelf:"flex-end",
-            marginRight:5,
-            marginTop:7,
-          }} />
-        </TouchableOpacity>
-        <TextInput
+        <Text style = {styles.subTitle}>보증금</Text>
+        <View style={styles.deposit}>      
+          <TextInput
               style={styles.textInputStyle}
-              placeholder="상세주소를 입력하세요."
+              placeholder="최대 보증금을 입력하세요."
               placeholderTextColor="#60605e"
+              numeric
+              keyboardType={'numeric'}
           />
+          <Text style={[{
+              alignSelf:"center",
+              fontSize:20,
+              fontWeight:'500',
+              flex:1
+          }]}>만원</Text>
+        </View>
       </View>
-
       <View style = {styles.components}>
-        <Text style = {styles.subTitle}>기본 정보</Text>
-        
-      </View>
 
-      <View style = {styles.components}>
         <Text style = {styles.subTitle}>부가 옵션</Text>
         <View style = {styles.btnContainer}>
           <View style = {styles.twoBtnContainer}>
@@ -168,7 +163,7 @@ export default function App() {
         </View>
       </View>
 
-      <View style = {styles.components}>
+        <View style = {styles.components}>
         <Text style = {styles.subTitle}>조건</Text>
         <Text style = {styles.optionTitle}>성별</Text>
         <View style = {styles.smallBtnContainer}>
@@ -182,65 +177,7 @@ export default function App() {
           <SmallButton content="무관"></SmallButton>
         </View>
       </View>
-      <View style = {styles.components}>
-        <Text style = {styles.subTitle}>상세 설명</Text>
-        <TextInput
-              style={styles.detailInputStyle}
-              multiline
-              numberOfLines={10}
-              placeholder="방에 대한 상세 설명을 작성해주세요."
-              placeholderTextColor="#60605e"
-              keyboardType="default"
-        />
-      </View>
-      <View style = {styles.components}>
-        <Text style = {styles.subTitle}>방 사진 업로드</Text>
-        <TouchableOpacity style={styles.add_image}>
-          <Image source={image_add} style={{
-            alignSelf:"center",
-            marginTop:100,
-          }}></Image>
-        </TouchableOpacity>
-        <View style={styles.detailImage}>
-          <TouchableOpacity style={styles.smallImage}>
-            <Image source={add} styles={styles.add}></Image>
-            <Text style={styles.imageTitle}>대표사진</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.smallImage}>
-            <Image source={add} styles={styles.add}></Image>
-            <Text style={styles.imageTitle}>화장실</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.smallImage}>
-            <Image source={add} styles={styles.add}></Image>
-            <Text style={styles.imageTitle}>부엌</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.smallImage}>
-            <Image source={add} styles={styles.add}></Image>
-            <Text style={styles.imageTitle}>사진1</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.smallImage}>
-            <Image source={add} styles={styles.add}></Image>
-            <Text style={styles.imageTitle}>사진2</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <View style = {styles.components}>
-        <Text style = {styles.subTitle}>360° 방 사진</Text>
-        <Text style = {styles.detailText}>
-        VR 카메라를 이용해 촬영하거나 '구글 스트리트 뷰' 앱으로 제작하세요.{"\n"}
-        사진의 크기는 가로:세로=2:1의 비율이어야 합니다.{"\n"}
-        사진의 확장자는 .jpeg 입니다.
-        </Text>
-        <TouchableOpacity style={styles.add_image}>
-          <Image source={vr_image} style={{
-            alignSelf:"center",
-            marginTop:100,
-          }}></Image>
-        </TouchableOpacity>
-      </View>
-
       <Confirm content={"적용하기"}></Confirm>
-      
     </ScrollView>
   );
 }
@@ -269,7 +206,7 @@ const styles = StyleSheet.create({
   subTitle:{
     fontSize:20,
     fontWeight:'700',
-    marginTop:10,
+    marginTop:20,
     marginLeft:40,
   },
   optionTitle:{
@@ -330,7 +267,7 @@ const styles = StyleSheet.create({
   },
   textInputStyle: {
     marginTop:20,
-    width: 300,
+    width: 200,
     borderColor:"#C4C4C4",
     borderBottomWidth:2,
     borderRadius:5,
@@ -338,61 +275,4 @@ const styles = StyleSheet.create({
     alignSelf:"center",
     flex:1
   },
-  address:{
-    marginTop:10,
-    alignSelf:"center",
-    width:300,
-    height:40,
-    borderRadius:13,
-    backgroundColor:"#F1F0F0",
-  },
-  detailInputStyle:{
-    marginTop:20,
-    borderRadius:5,
-    borderWidth:1,
-    borderColor:"#C4C4C4",
-    width:300,
-    height:370,
-    alignSelf:"center",
-    padding:5
-  },
-  add_image:{
-    marginTop:20,
-    width:250,
-    height:250,
-    borderWidth:1,
-    borderRadius:5,
-    borderColor:"#C4C4C4",
-    alignSelf:"center"
-  },
-  detailImage:{
-    marginTop:10,
-    padding:5,
-    height:80,
-    marginLeft:20,
-    flexDirection:"row"
-  },
-  smallImage:{
-    marginTop:10,
-    height:50,
-    width:50,
-    borderColor:"#C4C4C4",
-    borderRadius:5,
-    borderWidth:1,
-    marginLeft:10,
-  },
-  add:{
-    marginTop:50,
-  },
-  imageTitle:{
-    alignSelf:"center",
-    marginTop:20,
-    fontWeight:"700",
-  },
-  detailText:{
-    marginTop:10,
-    marginLeft:40,
-    color:"#8A8A8A",
-    fontSize:10,
-  }
 })

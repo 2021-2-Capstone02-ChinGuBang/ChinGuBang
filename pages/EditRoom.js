@@ -55,7 +55,7 @@ export default function App() {
           <TouchableOpacity style = {styles.backArrow}>
             <Image style={styles.arrow} source={Vector}/>
           </TouchableOpacity>
-          <Text style = {styles.title}>방 내놓기</Text>
+          <Text style = {styles.title}>방 수정하기</Text>
         </View>
       </View>
       <View style = {styles.components}>
@@ -239,7 +239,7 @@ export default function App() {
         </TouchableOpacity>
       </View>
 
-      <Confirm content={"적용하기"}></Confirm>
+      <Confirm content={"수정 완료"}></Confirm>
       
     </ScrollView>
   );
