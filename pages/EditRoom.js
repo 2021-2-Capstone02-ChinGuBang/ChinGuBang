@@ -1,33 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
 import React,{useState} from 'react';
-import { TouchableOpacity,ScrollView,StyleSheet, Text,Image, View, TextInput, Button } from 'react-native';
+import { TouchableOpacity,ScrollView,StyleSheet, Text,Image, View, TextInput } from 'react-native';
 
 import {Entypo} from '@expo/vector-icons'
-import Vector from './assets/Vector.png'
-import RedButton from './components/RedButton'
-import OptionButton from './components/OptionButton'
-import SmallButton from './components/SmallButton'
-import Confirm from './components/Confirm'
+import Vector from '../assets/Vector.png'
+import RedButton from '../components/RedButton'
+import OptionButton from '../components/OptionButton'
+import SmallButton from '../components/SmallButton'
+import Confirm from '../components/Confirm'
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 
-import bed from "./assets/bed.png"
-import desk from "./assets/desk.png"
-import fridge from "./assets/fridge.png"
-import airconditioner from "./assets/airconditioner.png"
-import chair from "./assets/chair.png"
-import closet from "./assets/closet.png"
-import washer from "./assets/washer.png"
-import microwave from "./assets/microwave.png"
-import wifi from "./assets/wifi.png"
-import tv from "./assets/tv.png"
-import cctv from "./assets/cctv.png"
-import parking from "./assets/parking.png"
-import elevator from "./assets/elevator.png"
-import add from "./assets/add.png"
-import vr_image from "./assets/vr_image.png"
-import image_add from "./assets/image_add.png"
+import bed from "../assets/bed.png"
+import desk from "../assets/desk.png"
+import fridge from "../assets/fridge.png"
+import airconditioner from "../assets/airconditioner.png"
+import chair from "../assets/chair.png"
+import closet from "../assets/closet.png"
+import washer from "../assets/washer.png"
+import microwave from "../assets/microwave.png"
+import wifi from "../assets/wifi.png"
+import tv from "../assets/tv.png"
+import cctv from "../assets/cctv.png"
+import parking from "../assets/parking.png"
+import elevator from "../assets/elevator.png"
+import add from "../assets/add.png"
+import vr_image from "../assets/vr_image.png"
+import image_add from "../assets/image_add.png"
 
 
 

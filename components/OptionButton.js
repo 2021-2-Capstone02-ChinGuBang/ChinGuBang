@@ -3,13 +3,18 @@ import React, { useState } from 'react';
 import { TouchableOpacity,StyleSheet, Text, View, Image } from 'react-native';
 
 export default function OptionButton({content,img}) {
-    const colours = ['#D84315', '#C4C4C4'];
-    let i = 1;
-    const [count, setCount] = useState(0);
-    const onPress = () => setCount(prevCount => prevCount+i);
+  const [colour,setColours]=useState("#C4C4C4")
+  const onPressHandler=color=>{
+    if (color==="#D84315"){
+      setColours("#C4C4C4")
+    }
+    else{
+      setColours("#D84315")
+    }
+  }
   return (
     <View style = {styles.container}>
-      <TouchableOpacity style = {[styles.button,{borderColor:colours[count], borderWidth:1}]} onpress={onPress}>
+      <TouchableOpacity style = {[styles.button,{borderColor:colour, borderWidth:1}]} onPress={()=>onPressHandler(colour)}>
         <Image style={styles.image} source={img} ></Image>
         <Text style = {styles.text}>{content}</Text>
       </TouchableOpacity>

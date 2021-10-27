@@ -1,29 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
 import React,{useState} from 'react';
-import { TouchableOpacity,ScrollView,StyleSheet, Text,Image, View, TextInput, Button } from 'react-native';
+import { ScrollView,StyleSheet, Text,View, TextInput } from 'react-native';
 
-import Vector from './assets/Vector.png'
-import RedButton from './components/RedButton'
-import OptionButton from './components/OptionButton'
-import SmallButton from './components/SmallButton'
-import Confirm from './components/Confirm'
+import RedButton from '../components/RedButton'
+import OptionButton from '../components/OptionButton'
+import SmallButton from '../components/SmallButton'
+import Confirm from '../components/Confirm'
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 
-import bed from "./assets/bed.png"
-import desk from "./assets/desk.png"
-import fridge from "./assets/fridge.png"
-import airconditioner from "./assets/airconditioner.png"
-import chair from "./assets/chair.png"
-import closet from "./assets/closet.png"
-import washer from "./assets/washer.png"
-import microwave from "./assets/microwave.png"
-import wifi from "./assets/wifi.png"
-import tv from "./assets/tv.png"
-import cctv from "./assets/cctv.png"
-import parking from "./assets/parking.png"
-import elevator from "./assets/elevator.png"
+import bed from "../assets/bed.png"
+import desk from "../assets/desk.png"
+import fridge from "../assets/fridge.png"
+import airconditioner from "../assets/airconditioner.png"
+import chair from "../assets/chair.png"
+import closet from "../assets/closet.png"
+import washer from "../assets/washer.png"
+import microwave from "../assets/microwave.png"
+import wifi from "../assets/wifi.png"
+import tv from "../assets/tv.png"
+import cctv from "../assets/cctv.png"
+import parking from "../assets/parking.png"
+import elevator from "../assets/elevator.png"
 
 
 
@@ -47,14 +45,16 @@ export default function FilterPage() {
 
   return (
     <ScrollView style = {styles.container}>
-      <View style = {[styles.components, {marginTop:0}]}>
+      {/* <View style = {[styles.components, {marginTop:0}]}>
         <View style = {styles.titleRow}>      
           <TouchableOpacity style = {styles.backArrow}>
             <Image style={styles.arrow} source={Vector}/>
           </TouchableOpacity>
           <Text style = {styles.title}>전체 필터</Text>
         </View>
-      </View>
+      </View> 
+      이거 만든다고 개고생했었는데 별 쓸데없는 짓이었네 ㅋㅋ
+      */}
       <View style = {styles.components}>
         <Text style = {styles.subTitle}>매물 종류</Text>
         <View style = {styles.btnContainer}>

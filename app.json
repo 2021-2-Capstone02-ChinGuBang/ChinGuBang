@@ -18,10 +18,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier":"com.capstone.ChinGuBang",
-      "config":{
-        "googleMaps":{"apiKey":"AIzaSyA1_YsXRAIMR9GXpBbUoDd94aoYfWLB55U"}
-      }
+      "bundleIdentifier":"com.capstone.ChinGuBang"
     },
     "android": {
       "adaptiveIcon": {

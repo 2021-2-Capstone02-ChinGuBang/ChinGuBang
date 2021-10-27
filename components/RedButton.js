@@ -1,16 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { TouchableOpacity,StyleSheet, Text, View } from 'react-native';
+import { Alert,TouchableOpacity,StyleSheet, Text, View } from 'react-native';
+import { color } from 'react-native-reanimated';
 
 
 export default function RedButton({content}) {
-    const colours = ['#D84315', '#C4C4C4'];
-    let i = 1;
-    const [count, setCount] = useState(0);
-    const onPress = () => setCount(prevCount => prevCount+i);
+    const [colour,setColours]=useState("#C4C4C4")
+    const onPressHandler=color=>{
+      if (color==="#D84315"){
+        setColours("#C4C4C4")
+      }
+      else{
+        setColours("#D84315")
+      }
+    }
   return (
     <View style = {styles.container}>
-      <TouchableOpacity style = {[styles.button,{backgroundColor:colours[count]}]} onpress={onPress}>
+      <TouchableOpacity style = {[styles.button,{backgroundColor:colour}]} onPress={()=>onPressHandler(colour)}>
         <Text style = {styles.text}>{content}</Text>
       </TouchableOpacity>
     </View>
