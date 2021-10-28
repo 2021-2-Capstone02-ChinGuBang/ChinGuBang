@@ -1,13 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { TouchableOpacity,StyleSheet, Text, View } from 'react-native';
+import { TouchableOpacity,StyleSheet, Text, View, Alert } from 'react-native';
 
 
-export default function Confirm({content,naviPage,navigation}) {
+export default function Confirm({content,naviPage,navigation,alert}) {
 
   return (
     <View style = {styles.container}>
-      <TouchableOpacity style = {styles.button} onPress={()=>{navigation.navigate(naviPage)}}>
+      <TouchableOpacity style = {styles.button} onPress={()=>{
+        navigation.navigate(naviPage)
+        if(alert==1){
+          Alert.alert(content,"완료")
+        }
+        }}>
         <Text style = {styles.text}>{content}</Text>
       </TouchableOpacity>
     </View>

@@ -10,7 +10,7 @@ export default function MyRoomCard({content, navigation}) {
   let pick = 0;//서버에서 하트를 눌렀는지 받아옴(0:안누름/1:누름), 현재는 상수처리
   
     return (
-        <TouchableOpacity onPress={()=>{navigation.navigate('방 내놓기')}}>
+        <TouchableOpacity onPress={()=>{navigation.navigate('방 보기')}}>
         <View style={styles.card}>
             <View style={styles.c1}>
                 <Image resizeMode={"cover"}

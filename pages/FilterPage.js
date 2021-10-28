@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import { ScrollView,StyleSheet, Text,View, TextInput } from 'react-native';
+import { ScrollView,StyleSheet, Text,View, TextInput, Alert } from 'react-native';
 
 import RedButton from '../components/RedButton'
 import OptionButton from '../components/OptionButton'
@@ -29,18 +29,16 @@ import elevator from "../assets/elevator.png"
 export default function FilterPage({navigation}) {
   const [date1, setDate1] = useState(new Date(1598051730000));
   const [date2, setDate2] = useState(new Date(1598051730000));
-
-  const [show1, setShow1] = useState(false);
-  const [show2, setShow2] = useState(false);
+  const [show, setShow] = useState(false);
 
   const onChange1 = (event, selectedDate) => {
     const currentDate = selectedDate || date1;
-    setShow1(Platform.OS === 'ios');
+    setShow(Platform.OS === 'ios');
     setDate1(currentDate);
   };
   const onChange2 = (event, selectedDate) => {
     const currentDate = selectedDate || date2;
-    setShow2(Platform.OS === 'ios');
+    setShow(Platform.OS === 'ios');
     setDate2(currentDate);
   };
 
@@ -92,26 +90,26 @@ export default function FilterPage({navigation}) {
         <Text style = {styles.subTitle}>임대 기간</Text>
 
         <View style = {styles.twoPicker}>
-          {show1&&(<DateTimePicker style={styles.date} minimumDate={new Date(2021,10,1)} maximumDate={new Date(2050,0,1)}
+          <DateTimePicker style={styles.date} minimumDate={new Date(2021,10,1)} maximumDate={new Date(2050,0,1)}
               testID="dateTimePicker"
               value={date1}
               mode='date'
               display="default"
               onChange={onChange1}
-          />)}
+          />
           <Text style={
             [{
               alignSelf:"center",
               fontSize:20,
               fontWeight:'700'
           }]}>~</Text>
-          {show2&&(<DateTimePicker style={styles.date} minimumDate={new Date(2021,10,1)} maximumDate={new Date(2050,0,1)}
+          <DateTimePicker style={styles.date} minimumDate={new Date(2021,10,1)} maximumDate={new Date(2050,0,1)}
               testID="dateTimePicker"
               value={date2}
               mode='date'
               display="default"
               onChange={onChange2}
-          />)}
+          />
         </View>
       </View>
       <View style = {styles.components}>
@@ -181,7 +179,7 @@ export default function FilterPage({navigation}) {
           <SmallButton content="무관"></SmallButton>
         </View>
       </View>
-      <Confirm content={"적용하기"}></Confirm>
+      <Confirm content={"적용하기"} naviPage={"MainPage"} navigation={navigation} alert={1}></Confirm>
     </ScrollView>
   );
 }

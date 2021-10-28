@@ -51,7 +51,7 @@ export default function MainPage({navigation}) {
           marginRight:20,
           width:25,
           height:25,
-        }}> 
+        }} onPress={()=>{navigation.navigate('알림')}}> 
           <Image source={message}/>
         </TouchableOpacity>
         <TouchableOpacity style={{
@@ -59,12 +59,12 @@ export default function MainPage({navigation}) {
           marginRight:25,
           width:25,
           height:25,
-        }}> 
+        }} onPress={()=>{navigation.navigate('MY')}}> 
         <Image source={profile}/>
         </TouchableOpacity>
       </View>
       <View style={styles.filter}>
-        <TouchableOpacity style={styles.condition}>
+        {/* <TouchableOpacity style={styles.condition}>
           <Text style={styles.conditionText}>원룸/투룸</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.condition}>
@@ -75,7 +75,7 @@ export default function MainPage({navigation}) {
         </TouchableOpacity>
         <TouchableOpacity style={styles.condition}>
           <Text style={styles.conditionText}>임대 기간</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity style={[styles.condition,{flexDirection:"row"}]}
         onPress={()=>{navigation.navigate('전체 필터')}}>
           <Image source={filter} style={{alignSelf:"center"}}/>
@@ -140,7 +140,7 @@ export default function MainPage({navigation}) {
               flex:5,
         }}>방 내놓기</Text>
       </TouchableOpacity>
-    <Confirm content={"모든 방 보기"} naviPage={"모든 방 보기"} navigation={navigation} ></Confirm>
+    <Confirm content={"모든 방 보기"} naviPage={"모든 방 보기"} navigation={navigation} alert={0} ></Confirm>
     </View>
   );
 }
@@ -157,8 +157,9 @@ const styles = StyleSheet.create({
     
   },
   map: {
-    width: Dimensions.get('window').width,
+    width: Dimensions.get('window').width-20,
     height: Dimensions.get('window').height-162.5-45,
+    alignSelf:"center"
   },
   button : {
     width:50,

@@ -32,9 +32,9 @@ export default function LoginPage({navigation,route}) {
           placeholder="비밀번호를 입력해주세요."
         /> 
       </View>
-      <TouchableOpacity style={styles.loginButton}><Text style={styles.loginButtonText}>로그인</Text></TouchableOpacity>
+      <TouchableOpacity style={styles.loginButton} onPress={()=>{navigation.navigate('MainPage')}}><Text style={styles.loginButtonText}>로그인</Text></TouchableOpacity>
       <TouchableOpacity style={styles.registerButton} onPress={()=>{navigation.navigate('학교등록')}}><Text style={styles.registerButtonText}>회원가입 하러가기</Text></TouchableOpacity>
-      <TouchableOpacity style={styles.xButton}><Text style={styles.xButtonText}>인증없이 보러가기</Text></TouchableOpacity>
+      <TouchableOpacity style={styles.xButton} onPress={()=>{navigation.navigate('MainPage')}}><Text style={styles.xButtonText}>인증없이 보러가기</Text></TouchableOpacity>
       <StatusBar style="auto" />
     </View>
   );

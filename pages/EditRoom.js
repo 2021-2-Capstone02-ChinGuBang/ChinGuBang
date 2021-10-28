@@ -239,7 +239,7 @@ export default function EditRoom({navigation}) {
         </TouchableOpacity>
       </View>
 
-      <Confirm content={"수정 완료"}></Confirm>
+      <Confirm content={"수정 완료"} naviPage={"내 방"} navigation={navigation} alert={1}></Confirm>
       
     </ScrollView>
   );

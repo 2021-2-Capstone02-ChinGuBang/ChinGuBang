@@ -134,6 +134,7 @@ export default function PutOutRoom({navigation}) {
               <Text style={styles.infoComp}>보증금</Text>
               <TextInput
               style={styles.basicInput}
+              keyboardType="number-pad"
               placeholder="ex) 200"
               placeholderTextColor="#60605e"
               />
@@ -143,6 +144,7 @@ export default function PutOutRoom({navigation}) {
               <Text style={styles.infoComp}>월세</Text>
               <TextInput
               style={styles.basicInput}
+              keyboardType="number-pad"
               placeholder="ex) 30"
               placeholderTextColor="#60605e"
               />
@@ -152,6 +154,7 @@ export default function PutOutRoom({navigation}) {
               <Text style={styles.infoComp}>관리비</Text>
               <TextInput
               style={styles.basicInput}
+              keyboardType="number-pad"
               placeholder="ex) 5"
               placeholderTextColor="#60605e"
               />
@@ -161,6 +164,7 @@ export default function PutOutRoom({navigation}) {
               <Text style={styles.infoComp}>전용 면적</Text>
               <TextInput
               style={styles.basicInput}
+              keyboardType="number-pad"
               placeholder="ex) 10"
               placeholderTextColor="#60605e"
               />
@@ -170,6 +174,7 @@ export default function PutOutRoom({navigation}) {
               <Text style={styles.infoComp}>층수</Text>
               <TextInput
               style={styles.basicInput}
+              keyboardType="number-pad"
               placeholder="ex) 5"
               placeholderTextColor="#60605e"
               />
@@ -179,6 +184,7 @@ export default function PutOutRoom({navigation}) {
               <Text style={styles.infoComp}>건축년도</Text>
               <TextInput
               style={styles.basicInput}
+              keyboardType="number-pad"
               placeholder="ex) 2020"
               placeholderTextColor="#60605e"
               />
@@ -292,7 +298,7 @@ export default function PutOutRoom({navigation}) {
         </TouchableOpacity>
       </View>
 
-      <Confirm content={"방 내놓기"} naviPage={"방 보기"}></Confirm>
+      <Confirm content={"방 내놓기"} naviPage={"내 방"} navigation={navigation} alert={1}></Confirm>
       
     </ScrollView>
   );

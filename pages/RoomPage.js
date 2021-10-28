@@ -182,7 +182,7 @@ export default function RoomPage({navigation}) {
                     <Image source={roomImage} style={styles.mainImage}></Image>
                 </TouchableOpacity>
             </View>
-            <Confirm content={"쪽지 보내기"} naviPage={"쪽지 보내기"} navigation={navigation} ></Confirm>
+            <Confirm content={"쪽지 보내기"} naviPage={"쪽지 보내기"} navigation={navigation} alert={0}></Confirm>
         </ScrollView>
     );
 }
