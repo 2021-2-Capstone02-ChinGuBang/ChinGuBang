@@ -11,13 +11,22 @@ import profile from '../assets/profile.png'
 
 
 export default function MainPage({navigation}) {
-  const [colour,setColours]=useState("#C4C4C4")
-  const onPressHandler=color=>{
+  const [colour1,setColours1]=useState("#C4C4C4")
+  const onPressHandler1=color=>{
     if (color==="#D84315"){
-      setColours("#C4C4C4")
+      setColours1("#C4C4C4")
     }
     else{
-      setColours("#D84315")
+      setColours1("#D84315")
+    }
+  }
+  const [colour2,setColours2]=useState("#C4C4C4")
+  const onPressHandler2=color=>{
+    if (color==="#D84315"){
+      setColours2("#C4C4C4")
+    }
+    else{
+      setColours2("#D84315")
     }
   }
   return (
@@ -73,66 +82,65 @@ export default function MainPage({navigation}) {
           <Text style={styles.conditionText}>필터</Text>
         </TouchableOpacity>
       </View>
-      <View>
       {/* 이거 없으면 글자가 지멋대로 왔다갔다 */}
-        <MapView style={styles.map} 
-        provider={PROVIDER_GOOGLE} 
-        initialRegion={{
-          latitude: 37.50519,
-          longitude: 126.95709,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}>
-        <Marker
-          coordinate={{latitude: 37.50519, longitude: 126.95709}}
-          title="this is a marker"
-          description="this is a marker example"
-        />
-        <TouchableOpacity style={[styles.button,
-        {
-          backgroundColor:colour,
-          position:'absolute',
-          right:65,
-          top:10,
-        }]}
-        onPress={()=>onPressHandler(colour)}>
-          <Text style={styles.btnText}>단기</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.button,
-        {
-          backgroundColor:colour,
-          position:'absolute',
-          right:10,
-          top:10,
-        }]}
-        onPress={()=>onPressHandler(colour)}>
-          <Text style={styles.btnText}>양도</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity style={[styles.putButton,
-        {
-          position:'absolute',
-          right:10,
-          bottom:10,
-          flexDirection:"row"
-        }]}
-        onPress={()=>{navigation.navigate('방 내놓기')}}>
-          <Image source={homeplus} style={{
-            flex:2,
-            alignSelf:"center",
-          }}></Image>
-          <Text style={{
-                color:"#000",
-                fontWeight:"500",
-                fontSize:20,
-                alignSelf:"center",
-                marginLeft:10,
-                flex:5,
-          }}>방 내놓기</Text>
-        </TouchableOpacity>
-      </MapView>
-    </View>
-    <Confirm content={"모든 방 보기"}></Confirm>
+      <MapView style={styles.map} 
+      provider={PROVIDER_GOOGLE} 
+      initialRegion={{
+        latitude: 37.50519,
+        longitude: 126.95709,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      }}>
+      <Marker
+        coordinate={{latitude: 37.50519, longitude: 126.95709}}
+        title="this is a marker"
+        description="this is a marker example"
+      />
+ 
+    </MapView>
+    <TouchableOpacity style={[styles.button,
+      {
+        backgroundColor:colour1,
+        position:'absolute',
+        right:65,
+        top:140,
+      }]}
+      onPress={()=>onPressHandler1(colour1)}>
+        <Text style={styles.btnText}>단기</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={[styles.button,
+      {
+        backgroundColor:colour2,
+        position:'absolute',
+        right:10,
+        top:140,
+      }]}
+      onPress={()=>onPressHandler2(colour2)}>
+        <Text style={styles.btnText}>양도</Text>
+      </TouchableOpacity>
+      
+      <TouchableOpacity style={[styles.putButton,
+      {
+        position:'absolute',
+        right:10,
+        bottom:80,
+        flexDirection:"row"
+      }]}
+      onPress={()=>{navigation.navigate('방 내놓기')}}>
+        <Image source={homeplus} style={{
+          flex:2,
+          alignSelf:"center",
+        }}></Image>
+        <Text style={{
+              color:"#000",
+              fontWeight:"500",
+              fontSize:20,
+              alignSelf:"center",
+              marginLeft:10,
+              flex:5,
+        }}>방 내놓기</Text>
+      </TouchableOpacity>
+    <Confirm content={"모든 방 보기"} naviPage={"모든 방 보기"} navigation={navigation} ></Confirm>
     </View>
   );
 }

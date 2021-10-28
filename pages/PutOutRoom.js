@@ -29,7 +29,7 @@ import image_add from "../assets/image_add.png"
 
 
 
-export default function PutOutRoom() {
+export default function PutOutRoom({navigation}) {
   const [date1, setDate1] = useState(new Date(1598051730000));
   const [date2, setDate2] = useState(new Date(1598051730000));
 
@@ -125,12 +125,31 @@ export default function PutOutRoom() {
               style={styles.textInputStyle}
               placeholder="상세주소를 입력하세요."
               placeholderTextColor="#60605e"
-          />
+        />
       </View>
 
       <View style = {styles.components}>
         <Text style = {styles.subTitle}>기본 정보</Text>
-        
+          <View style={[styles.info,{borderTopWidth:1}]}>
+              <Text style={styles.infoComp}>주소</Text>
+              <Text style={styles.infoData}>서울특별시 동작구 흑석동 111-222</Text>
+          </View>
+          <View style={styles.info}>
+              <Text style={styles.infoComp}>전용 면적</Text>
+              <Text style={styles.infoData}>7평</Text>
+          </View>
+          <View style={styles.info}>
+              <Text style={styles.infoComp}>임대 기간</Text>
+              <Text style={styles.infoData}>2021.11.01. ~ 2022.02.01.</Text>
+          </View>
+          <View style={styles.info}>
+              <Text style={styles.infoComp}>층수</Text>
+              <Text style={styles.infoData}>3층</Text>
+          </View>
+          <View style={styles.info}>
+              <Text style={styles.infoComp}>건축년도</Text>
+              <Text style={styles.infoData}>2017년</Text>
+          </View>
       </View>
 
       <View style = {styles.components}>
@@ -160,8 +179,9 @@ export default function PutOutRoom() {
             <OptionButton content="복도 CCTV" img={cctv}></OptionButton>
             <OptionButton content="주차 가능" img={parking}></OptionButton>
           </View>
-          <View style = {styles.twoBtnContainer}>
+          <View style = {[styles.twoBtnContainer,{marginLeft:25}]}>
             <OptionButton content="엘리베이터" img={elevator}></OptionButton>
+            <View style={{flex:1}}></View>
           </View>
         </View>
       </View>
@@ -237,7 +257,7 @@ export default function PutOutRoom() {
         </TouchableOpacity>
       </View>
 
-      <Confirm content={"방 내놓기"}></Confirm>
+      <Confirm content={"방 내놓기"} naviPage={"방 보기"}></Confirm>
       
     </ScrollView>
   );

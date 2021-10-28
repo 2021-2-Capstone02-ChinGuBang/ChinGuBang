@@ -30,7 +30,7 @@ import image_add from "../assets/image_add.png"
 
 
 
-export default function EditRoom() {
+export default function EditRoom({navigation}) {
   const [date1, setDate1] = useState(new Date(1598051730000));
   const [date2, setDate2] = useState(new Date(1598051730000));
 
@@ -49,14 +49,14 @@ export default function EditRoom() {
 
   return (
     <ScrollView style = {styles.container}>
-      <View style = {[styles.components, {marginTop:0}]}>
+      {/* <View style = {[styles.components, {marginTop:0}]}>
         <View style = {styles.titleRow}>      
           <TouchableOpacity style = {styles.backArrow}>
             <Image style={styles.arrow} source={Vector}/>
           </TouchableOpacity>
           <Text style = {styles.title}>수정하기</Text>
         </View>
-      </View>
+      </View> */}
       <View style = {styles.components}>
         <Text style = {styles.subTitle}>매물 종류</Text>
         <View style = {styles.btnContainer}>
@@ -161,8 +161,9 @@ export default function EditRoom() {
             <OptionButton content="복도 CCTV" img={cctv}></OptionButton>
             <OptionButton content="주차 가능" img={parking}></OptionButton>
           </View>
-          <View style = {styles.twoBtnContainer}>
+          <View style = {[styles.twoBtnContainer,{marginLeft:25}]}>
             <OptionButton content="엘리베이터" img={elevator}></OptionButton>
+            <View style={{flex:1}}></View>
           </View>
         </View>
       </View>

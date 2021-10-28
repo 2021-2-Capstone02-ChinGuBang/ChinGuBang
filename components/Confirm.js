@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import { TouchableOpacity,StyleSheet, Text, View } from 'react-native';
 
 
-export default function Confirm({content}) {
+export default function Confirm({content,naviPage,navigation}) {
 
   return (
     <View style = {styles.container}>
-      <TouchableOpacity style = {styles.button}>
+      <TouchableOpacity style = {styles.button} onPress={()=>{navigation.navigate(naviPage)}}>
         <Text style = {styles.text}>{content}</Text>
       </TouchableOpacity>
     </View>
