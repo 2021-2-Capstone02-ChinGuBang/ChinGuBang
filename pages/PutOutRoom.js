@@ -131,25 +131,60 @@ export default function PutOutRoom({navigation}) {
       <View style = {styles.components}>
         <Text style = {styles.subTitle}>기본 정보</Text>
           <View style={[styles.info,{borderTopWidth:1}]}>
-              <Text style={styles.infoComp}>주소</Text>
-              <Text style={styles.infoData}>서울특별시 동작구 흑석동 111-222</Text>
+              <Text style={styles.infoComp}>보증금</Text>
+              <TextInput
+              style={styles.basicInput}
+              placeholder="ex) 200"
+              placeholderTextColor="#60605e"
+              />
+              <Text style={styles.infoData}>만원</Text>
+          </View>
+          <View style={styles.info}>
+              <Text style={styles.infoComp}>월세</Text>
+              <TextInput
+              style={styles.basicInput}
+              placeholder="ex) 30"
+              placeholderTextColor="#60605e"
+              />
+              <Text style={styles.infoData}>만원</Text>
+          </View>
+          <View style={styles.info}>
+              <Text style={styles.infoComp}>관리비</Text>
+              <TextInput
+              style={styles.basicInput}
+              placeholder="ex) 5"
+              placeholderTextColor="#60605e"
+              />
+              <Text style={styles.infoData}>만원</Text>
           </View>
           <View style={styles.info}>
               <Text style={styles.infoComp}>전용 면적</Text>
-              <Text style={styles.infoData}>7평</Text>
-          </View>
-          <View style={styles.info}>
-              <Text style={styles.infoComp}>임대 기간</Text>
-              <Text style={styles.infoData}>2021.11.01. ~ 2022.02.01.</Text>
+              <TextInput
+              style={styles.basicInput}
+              placeholder="ex) 10"
+              placeholderTextColor="#60605e"
+              />
+              <Text style={styles.infoData}>평</Text>
           </View>
           <View style={styles.info}>
               <Text style={styles.infoComp}>층수</Text>
-              <Text style={styles.infoData}>3층</Text>
+              <TextInput
+              style={styles.basicInput}
+              placeholder="ex) 5"
+              placeholderTextColor="#60605e"
+              />
+              <Text style={styles.infoData}>층</Text>
           </View>
           <View style={styles.info}>
               <Text style={styles.infoComp}>건축년도</Text>
-              <Text style={styles.infoData}>2017년</Text>
+              <TextInput
+              style={styles.basicInput}
+              placeholder="ex) 2020"
+              placeholderTextColor="#60605e"
+              />
+              <Text style={styles.infoData}>년</Text>
           </View>
+
       </View>
 
       <View style = {styles.components}>
@@ -412,5 +447,36 @@ const styles = StyleSheet.create({
     marginLeft:40,
     color:"#8A8A8A",
     fontSize:10,
-  }
+  },
+  basicInput:{
+    fontSize:15,
+    fontWeight:"500",
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    alignItems:"center",
+    flex:2,
+  },
+  info:{
+    flexDirection:"row",
+    height:55,
+    width:"100%",
+    borderBottomWidth:1,
+    borderColor:"#E5E5E5",
+  },
+  infoComp:{
+      marginLeft:20,
+      alignSelf:"center",
+      flex:1.2,
+      fontSize:15,
+      color:"#8A8A8A",
+  },
+  infoData:{
+      flex:1,
+      fontSize:15,
+      color:"#000",
+      alignSelf:"center",
+      fontWeight:"500",
+  },
 })
