@@ -114,7 +114,8 @@ export default function PutOutRoom({navigation}) {
       </View>
       <View style = {styles.components}>
         <Text style={styles.subTitle}>주소 입력</Text>
-        <TouchableOpacity style={styles.address} onPress={()=>{navigation.navigate('주소 검색')}}>
+        <TouchableOpacity style={styles.address} >
+        {/* onPress={()=>{navigation.navigate('주소 검색')}} */}
           <Image source={search} style={{
             alignSelf:"flex-end",
             marginRight:5,

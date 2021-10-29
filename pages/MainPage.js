@@ -187,10 +187,11 @@ const styles = StyleSheet.create({
     alignSelf:"center"
   },
   filter:{
-    width:"100%",
+    width:"50%",
     height:45,
     backgroundColor:"#F6F6F6",
-    flexDirection:"row"
+    flexDirection:"row",
+    alignSelf:"flex-start",
   },
   condition:{
     flex:1,

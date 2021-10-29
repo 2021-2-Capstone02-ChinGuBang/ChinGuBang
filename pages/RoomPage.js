@@ -26,13 +26,13 @@ export default function RoomPage({navigation}) {
     let title="월세 30만원/보증금 200만원";
     let detail="흑석역 10분 상도역 15분 거리입니다. \n코앞에 편의점 있고 학교 정문 3분 후문 5분,,,, \n신축이라 엄청 깨끗하고 벌레가 나온적이 한번도 없습니당!!"
     const [items, setItems] = useState([]);
-
+    let images = [roomImage,bed,desk]
     useEffect(() => {
       let items = Array.apply(null, Array(60)).map((v, i) => {
         //Loop to make image array to show in slider
         return {
           source: {
-            roomImage,bed,desk,
+            uri: 'http://placehold.it/200x200?text=' + (i + 1),
           },
         };
       });
