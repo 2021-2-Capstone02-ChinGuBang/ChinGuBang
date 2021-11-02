@@ -33,7 +33,7 @@ export default function RoomCard({content,navigation}) {
                 <View style={styles.c4}>
                     <Text style={styles.ptext} numberOfLines={1}>{content.price}</Text>
                     <Text style={styles.dtext} numberOfLines={1}>{content.date}</Text>
-                    <Text style={styles.ftext} numberOfLines={1}>{content.floor}</Text>
+                    <Text style={styles.ftext} numberOfLines={1}>{content.floor+", "+content.area}</Text>
                     <Text style={styles.utext} numberOfLines={1}>{content.update}</Text>
                 </View>
             </View>

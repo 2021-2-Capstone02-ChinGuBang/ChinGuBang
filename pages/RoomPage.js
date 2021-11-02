@@ -22,9 +22,11 @@ import parking from "../assets/parking.png"
 import elevator from "../assets/elevator.png"
 import roomImage from "../assets/roomImage.png"
 
+import roomdata from "../room.json"
+
 export default function RoomPage({navigation}) {
-    let title="월세 30만원/보증금 200만원";
-    let detail="흑석역 10분 상도역 15분 거리입니다. \n코앞에 편의점 있고 학교 정문 3분 후문 5분,,,, \n신축이라 엄청 깨끗하고 벌레가 나온적이 한번도 없습니당!!"
+    let room = roomdata.data[0];
+    let option = room.option;
     const [items, setItems] = useState([]);
     let images = [roomImage,bed,desk]
     useEffect(() => {
@@ -54,10 +56,10 @@ export default function RoomPage({navigation}) {
             <View style = {styles.components}>
                 <View style={styles.badgeContainer}>            
                     <View style={styles.kind}>
-                        <Text style={styles.kindtext}>오피스텔</Text>
+                        <Text style={styles.kindtext}>{room.kind}</Text>
                     </View>
                         <View style={styles.kind}>
-                            <Text style={styles.kindtext}>단기임대</Text>
+                            <Text style={styles.kindtext}>{room.method}</Text>
                     </View>
                     <View style={{flex:4}}></View>
                 </View>
@@ -66,57 +68,57 @@ export default function RoomPage({navigation}) {
                     fontWeight:"700",
                     marginLeft:5,
                     marginTop:20,
-                }}>{title}</Text>
+                }}>{room.price}</Text>
             </View>
             <View style={styles.components}>
-                <Text style={styles.detailText} multiline={true}>{detail}</Text>
+                <Text style={styles.detailText} multiline={true}>{room.detail}</Text>
             </View>
             <View style={styles.components}>
                 <Text style={styles.subTitle}>방 정보</Text>
                 <View style={[styles.info,{borderTopWidth:1}]}>
                     <Text style={styles.infoComp}>주소</Text>
-                    <Text style={styles.infoData}>서울특별시 동작구 흑석동 111-222</Text>
+                    <Text style={styles.infoData}>{room.address}</Text>
                 </View>
                 <View style={styles.info}>
                     <Text style={styles.infoComp}>전용 면적</Text>
-                    <Text style={styles.infoData}>7평</Text>
+                    <Text style={styles.infoData}>{room.area}</Text>
                 </View>
                 <View style={styles.info}>
                     <Text style={styles.infoComp}>임대 기간</Text>
-                    <Text style={styles.infoData}>2021.11.01. ~ 2022.02.01.</Text>
+                    <Text style={styles.infoData}>{room.date}</Text>
                 </View>
                 <View style={styles.info}>
                     <Text style={styles.infoComp}>층수</Text>
-                    <Text style={styles.infoData}>3층</Text>
+                    <Text style={styles.infoData}>{room.floor}</Text>
                 </View>
                 <View style={styles.info}>
                     <Text style={styles.infoComp}>건축년도</Text>
-                    <Text style={styles.infoData}>2017년</Text>
+                    <Text style={styles.infoData}>{room.constYear+"년"}</Text>
                 </View>
             </View>
             <View style={styles.components}>
                 <Text style={styles.subTitle}>가격 정보</Text>
                 <View style={[styles.info,{borderTopWidth:1}]}>
                     <Text style={styles.infoComp}>보증금</Text>
-                    <Text style={styles.infoData}>200 만원</Text>
+                    <Text style={styles.infoData}>{room.deposit+" 만원"}</Text>
                 </View>
                 <View style={styles.info}>
                     <Text style={styles.infoComp}>월세</Text>
-                    <Text style={styles.infoData}>30만원</Text>
+                    <Text style={styles.infoData}>{room.monthly+" 만원"}</Text>
                 </View>
                 <View style={styles.info}>
                     <Text style={styles.infoComp}>관리비</Text>
-                    <Text style={styles.infoData}>5만원</Text>
+                    <Text style={styles.infoData}>{room.admin+" 만원"}</Text>
                 </View>
             </View>
             <View style={styles.components}>
                 <Text style={styles.subTitle}>조건</Text>
                 <View style={styles.badgeContainer}>            
                     <View style={styles.kind}>
-                        <Text style={styles.kindtext}>남성전용</Text>
+                        <Text style={styles.kindtext}>{room.conditionSex}</Text>
                     </View>
                     <View style={styles.kind}>
-                            <Text style={styles.kindtext}>비흡연</Text>
+                            <Text style={styles.kindtext}>{room.conditionCigar}</Text>
                     </View>
                     <View style={{flex:4}}></View>
                 </View>
@@ -125,31 +127,31 @@ export default function RoomPage({navigation}) {
                 <Text style = {styles.subTitle}>부가 옵션</Text>
                 <View style = {styles.btnContainer}>
                 <View style = {styles.twoBtnContainer}>
-                    <OptionUntouch content="침대" img={bed} set={0}></OptionUntouch>
-                    <OptionUntouch content="책상" img={desk}></OptionUntouch>
+                    <OptionUntouch content="침대" img={bed} set={option.bed}></OptionUntouch>
+                    <OptionUntouch content="책상" img={desk} set={option.desk}></OptionUntouch>
                 </View>
                 <View style = {styles.twoBtnContainer}>
-                    <OptionUntouch content="냉장고" img={fridge} set={0}></OptionUntouch>
-                    <OptionUntouch content="에어컨" img={airconditioner} set={0}></OptionUntouch>
+                    <OptionUntouch content="냉장고" img={fridge} set={option.fridge}></OptionUntouch>
+                    <OptionUntouch content="에어컨" img={airconditioner} set={option.aircon}></OptionUntouch>
                 </View>
                 <View style = {styles.twoBtnContainer}>
-                    <OptionUntouch content="의자" img={chair}></OptionUntouch>
-                    <OptionUntouch content="옷장" img={closet}></OptionUntouch>
+                    <OptionUntouch content="의자" img={chair} set={option.chair}></OptionUntouch>
+                    <OptionUntouch content="옷장" img={closet}set={option.closet}></OptionUntouch>
                 </View>
                 <View style = {styles.twoBtnContainer}>
-                    <OptionUntouch content="세탁기" img={washer} set={0}></OptionUntouch>
-                    <OptionUntouch content="전자레인지" img={microwave}></OptionUntouch>
+                    <OptionUntouch content="세탁기" img={washer} set={option.washer}></OptionUntouch>
+                    <OptionUntouch content="전자레인지" img={microwave} set={option.microwave}></OptionUntouch>
                 </View>
                 <View style = {styles.twoBtnContainer}>
-                    <OptionUntouch content="WIFI" img={wifi}></OptionUntouch>
-                    <OptionUntouch content="TV" img={tv}></OptionUntouch>
+                    <OptionUntouch content="WIFI" img={wifi} set={option.wifi}></OptionUntouch>
+                    <OptionUntouch content="TV" img={tv} set={option.tv}></OptionUntouch>
                 </View>
                 <View style = {styles.twoBtnContainer}>
-                    <OptionUntouch content="복도 CCTV" img={cctv}></OptionUntouch>
-                    <OptionUntouch content="주차 가능" img={parking}></OptionUntouch>
+                    <OptionUntouch content="복도 CCTV" img={cctv} set={option.cctv}></OptionUntouch>
+                    <OptionUntouch content="주차 가능" img={parking} set={option.parking}></OptionUntouch>
                 </View>
                 <View style = {[styles.twoBtnContainer,{marginLeft:25}]}>
-                    <OptionUntouch content="엘리베이터" img={elevator}></OptionUntouch>
+                    <OptionUntouch content="엘리베이터" img={elevator} set={option.elevator}></OptionUntouch>
                     <View style={{flex:1}}></View>
                 </View>
                 </View>
@@ -160,7 +162,7 @@ export default function RoomPage({navigation}) {
                     fontSize:15,
                     fontWeight:"500",
                     marginLeft:20,
-                }}>서울특별시 동작구 흑석동 111-222</Text>
+                }}>{room.address}</Text>
                 <MapView style={styles.map} 
                     provider={PROVIDER_GOOGLE} 
                     initialRegion={{

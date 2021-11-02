@@ -48,14 +48,6 @@ export default function PutOutRoom({navigation}) {
 
   return (
     <ScrollView style = {styles.container}>
-      {/* <View style = {[styles.components, {marginTop:0}]}>
-        <View style = {styles.titleRow}>      
-          <TouchableOpacity style = {styles.backArrow}>
-            <Image style={styles.arrow} source={Vector}/>
-          </TouchableOpacity>
-          <Text style = {styles.title}>방 내놓기</Text>
-        </View>
-      </View> */}
       <View style = {styles.components}>
         <Text style = {styles.subTitle}>매물 종류</Text>
         <View style = {styles.btnContainer}>

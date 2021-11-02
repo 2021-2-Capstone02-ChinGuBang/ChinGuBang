@@ -3,7 +3,7 @@ import {StyleSheet, Text, View, Image } from 'react-native';
 
 export default function OptionButton({content,img,set}) {
     let colour=""
-    if(set===0){
+    if(set){
         colour="#D84315"
     }
     else colour="#C4C4C4"
