@@ -184,6 +184,8 @@ export default function PutOutRoom({navigation, route}) {
       setCond(true);
       sexColor(2)
       cigarColor(1)
+    }else{
+      setCond(false);
     }
   }
   const typeColor = (i) =>{
@@ -342,6 +344,7 @@ export default function PutOutRoom({navigation, route}) {
               mode='date'
               display="default"
               onChange={onChange2}
+              disabled={cond}
           />
         </View>
       </View>
