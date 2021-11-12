@@ -6,7 +6,7 @@ import { useIsFocused } from '@react-navigation/native';
 import base64 from 'base-64'
 import OptionButton from '../components/OptionButton'
 
-
+import Postcode from '@actbase/react-daum-postcode';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 import search from '../assets/search.png'
@@ -279,14 +279,26 @@ export default function PutOutRoom({navigation, route}) {
       </View>
       <View style = {styles.components}>
         <Text style={styles.subTitle}>주소 입력</Text>
-        <TouchableOpacity style={styles.address} 
+        {/* <TouchableOpacity style={styles.address} 
           onPress={()=>{navigation.navigate('주소 검색')}}> 
           <Image source={search} style={{
             alignSelf:"flex-end",
             marginRight:5,
             marginTop:7,
           }}/>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+        <Postcode
+          style={{ width: "100%", height: 650 }}
+          jsOptions={{ animation: true }}
+          onSelected={ data=>{
+            //console.log(JSON.stringify(data.address))
+            setPost(data.address)
+            console.log(post)
+            navigation.navigate('방 내놓기'),{"postcode": data.address}
+            console.log(post)
+            Alert.alert("주소 선택 완료!",post);
+          }}
+      />
         <Text style={styles.textInputStyle}>{post}</Text>
         <TextInput
               style={styles.textInputStyle}
@@ -485,8 +497,8 @@ export default function PutOutRoom({navigation, route}) {
       })
       .then(function(response){
         console.log(response)
-        navigation.navigate("내 방")
-        Alert.alert("완료")
+        navigation.navigate("MainPage")
+        Alert.alert("방이 정상적으로 등록되었습니다.")
       })
       .catch(function(error) {
         if (error.response) {
