@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { Circle, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions, Image, TouchableOpacity } from 'react-native';
 
 import Confirm from '../components/Confirm'
@@ -8,6 +8,7 @@ import filter from '../assets/filter.png'
 import homeplus from '../assets/homeplus.png'
 import message from '../assets/message.png'
 import profile from '../assets/profile.png'
+import axios from 'axios';
 
 
 export default function MainPage({navigation}) {
@@ -51,8 +52,16 @@ export default function MainPage({navigation}) {
           marginRight:20,
           width:25,
           height:25,
+          flexDirection:"row"
         }} onPress={()=>{navigation.navigate('알림')}}> 
           <Image source={message}/>
+
+          <Text style={{
+              color:"#D84315",
+              fontSize:13,
+              fontWeight:"700"
+            }}>3</Text>
+            
         </TouchableOpacity>
         <TouchableOpacity style={{
           marginTop:60,
@@ -63,7 +72,24 @@ export default function MainPage({navigation}) {
         <Image source={profile}/>
         </TouchableOpacity>
       </View>
-      <View style={styles.filter}>
+      
+      {/* 이거 없으면 글자가 지멋대로 왔다갔다 */}
+      <MapView style={styles.map} 
+      provider={PROVIDER_GOOGLE} 
+      initialRegion={{
+        latitude: 37.50519,
+        longitude: 126.95709,
+        latitudeDelta: 0.00922,
+        longitudeDelta: 0.00421,
+      }}>
+
+        <Marker
+          coordinate={{latitude: 37.50519, longitude: 126.95709}}
+          title="2021-11-04 ~"
+          description="2022-01-05"
+        />
+  
+      </MapView>
         {/* <TouchableOpacity style={styles.condition}>
           <Text style={styles.conditionText}>원룸/투룸</Text>
         </TouchableOpacity>
@@ -76,34 +102,14 @@ export default function MainPage({navigation}) {
         <TouchableOpacity style={styles.condition}>
           <Text style={styles.conditionText}>임대 기간</Text>
         </TouchableOpacity> */}
-        <TouchableOpacity style={[styles.condition,{flexDirection:"row"}]}
-        onPress={()=>{navigation.navigate('전체 필터')}}>
-          <Image source={filter} style={{alignSelf:"center"}}/>
-          <Text style={styles.conditionText}>필터</Text>
-        </TouchableOpacity>
-      </View>
-      {/* 이거 없으면 글자가 지멋대로 왔다갔다 */}
-      <MapView style={styles.map} 
-      provider={PROVIDER_GOOGLE} 
-      initialRegion={{
-        latitude: 37.50519,
-        longitude: 126.95709,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      }}>
-      <Marker
-        coordinate={{latitude: 37.50519, longitude: 126.95709}}
-        title="this is a marker"
-        description="this is a marker example"
-      />
- 
-    </MapView>
+        
+      
     <TouchableOpacity style={[styles.button,
       {
         backgroundColor:colour1,
         position:'absolute',
-        right:65,
-        top:140,
+        right:140,
+        top:95,
       }]}
       onPress={()=>onPressHandler1(colour1)}>
         <Text style={styles.btnText}>단기</Text>
@@ -112,13 +118,21 @@ export default function MainPage({navigation}) {
       {
         backgroundColor:colour2,
         position:'absolute',
-        right:10,
-        top:140,
+        right:75,
+        top:95,
       }]}
       onPress={()=>onPressHandler2(colour2)}>
         <Text style={styles.btnText}>양도</Text>
       </TouchableOpacity>
       
+      <TouchableOpacity style={[styles.condition,{position:'absolute',
+        right:10,
+        top:95,width:60,flexDirection:"row",backgroundColor:"#fff",borderWidth:2,borderRadius:5,borderColor:"#D84315"}]}
+        onPress={()=>{navigation.navigate('전체 필터')}}>
+          <Image source={filter} style={{alignSelf:"center"}}/>
+          <Text style={styles.conditionText}>필터</Text>
+        </TouchableOpacity>
+        
       <TouchableOpacity style={[styles.putButton,
       {
         position:'absolute',
@@ -140,7 +154,40 @@ export default function MainPage({navigation}) {
               flex:5,
         }}>방 내놓기</Text>
       </TouchableOpacity>
-    <Confirm content={"모든 방 보기"} naviPage={"모든 방 보기"} navigation={navigation} alert={0} ></Confirm>
+      <TouchableOpacity style = {styles.cButton} onPress={()=>
+        axios.get(`http://54.180.160.150:5000/api/v1/room?offset=0&limit=5`,{
+          headers: {
+            Authorization : `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJRCI6MjR9LCJpYXQiOjE2MzY0NDE2MzUsImV4cCI6MTYzNzY1MTIzNX0.1XGUeQ7tQ23nQcT3iLAtVFoEO_govS9cHED71LRYbCc`
+          }
+        })
+        .then((response)=>{
+          //console.log(response.data);
+          navigation.navigate("모든 방 보기",{content:response.data})
+        })
+        .catch((error)=>{
+          if (error.response) {
+            // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
+            //console.log(error.response.data);
+            //console.log(error.response.status);
+            //console.log(error.response.headers);
+          }
+          else if (error.request) {
+            // 요청이 이루어 졌으나 응답을 받지 못했습니다.
+            // `error.request`는 브라우저의 XMLHttpRequest 인스턴스 또는
+            // Node.js의 http.ClientRequest 인스턴스입니다.
+            console.log(error.request);
+          }
+          else {
+            // 오류를 발생시킨 요청을 설정하는 중에 문제가 발생했습니다.
+            //console.log('Error', error.message);
+          }
+          //console.log(error.config);
+          console.log("ErrorErrorgggErrorError");
+          //Alert.alert(JSON.stringify(error.response.status))
+        })
+        }>
+        <Text style = {styles.cText}>모든 방 보기</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -162,12 +209,24 @@ const styles = StyleSheet.create({
     alignSelf:"center"
   },
   button : {
-    width:50,
+    width:60,
     height:35,
     margin:5,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius:10,
+    borderRadius:5,
+  },
+  cButton : {
+    width:"100%",
+    height:72.5,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor:"#D84315"
+  },
+  cText : {
+    color:"#FFF",
+    fontWeight:"700",
+    fontSize:20,
   },
   putButton:{
     width:160,
@@ -194,14 +253,20 @@ const styles = StyleSheet.create({
     alignSelf:"flex-start",
   },
   condition:{
-    flex:1,
-    alignContent:"center",
-    justifyContent:"center"
+    width:50,
+    height:35,
+    margin:5,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius:10,
+    //flex:1,
+    //alignContent:"center",
+    //justifyContent:"center"
   },
   conditionText:{
-    fontSize:16,
-    fontWeight:"500",
+    fontSize:15,
+    fontWeight:"700",
     alignSelf:"center",
-    color:"#000"
+    color:"#D84315"
   }
 });

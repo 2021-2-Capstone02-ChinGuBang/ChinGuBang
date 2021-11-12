@@ -5,8 +5,7 @@ import search from "../iconimage/search.png"
 import roomdata from "../room.json"
 import RoomCard from '../components/RoomCard';
 
-export default function AllroomPage({navigation}) {
-console.disableYellowBox = true;
+export default function AllroomPage({navigation, route}) {
 //const [state, setState] = useState([])
 
 //useEffect(()=>{
@@ -15,8 +14,9 @@ console.disableYellowBox = true;
 
 
 //서버에서 정보 받아와야 함
-let room = roomdata.data;
-
+const [room,setRoom] = useState(route.params.content.data.rooms);
+console.log("넘어오긴 하나,,,")
+console.log(route.params.content.data.rooms)
   return (
     <View style={styles.container}>
       <ScrollView>

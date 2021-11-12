@@ -22,6 +22,7 @@ import tv from "../assets/tv.png"
 import cctv from "../assets/cctv.png"
 import parking from "../assets/parking.png"
 import elevator from "../assets/elevator.png"
+import stove from "../assets/stove.png"
 
 
 
@@ -158,9 +159,9 @@ export default function FilterPage({navigation}) {
             <OptionButton content="복도 CCTV" img={cctv}></OptionButton>
             <OptionButton content="주차 가능" img={parking}></OptionButton>
           </View>
-          <View style = {[styles.twoBtnContainer,{marginLeft:25}]}>
+          <View style = {styles.twoBtnContainer}>
             <OptionButton content="엘리베이터" img={elevator}></OptionButton>
-            <View style={{flex:1}}></View>
+            <OptionButton content="가스레인지" img={stove}></OptionButton>
           </View>
         </View>
       </View>
