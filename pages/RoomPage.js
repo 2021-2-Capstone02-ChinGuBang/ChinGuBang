@@ -31,16 +31,16 @@ export default function RoomPage({navigation, route}) {
     const [room, setRoom] = useState(route.params.content)
     const [option,setOption] = useState(room.data.options)
     let photo = [
-        // base64.decode(room.data.photo.main), 
-        // base64.decode(room.data.photo.restroom), 
-        // base64.decode(room.data.photo.kitchen), 
-        // base64.decode(room.data.photo.photo1), 
-        // base64.decode(room.data.photo.photo2)
-        room.data.photo.main,
-        room.data.photo.restroom,
-        room.data.photo.kitchen,
-        room.data.photo.photo1,
-        room.data.photo.photo2
+        base64.decode(room.data.photo.main), 
+        base64.decode(room.data.photo.restroom), 
+        base64.decode(room.data.photo.kitchen), 
+        base64.decode(room.data.photo.photo1), 
+        base64.decode(room.data.photo.photo2)
+        // room.data.photo.main,
+        // room.data.photo.restroom,
+        // room.data.photo.kitchen,
+        // room.data.photo.photo1,
+        // room.data.photo.photo2
     ]
     let items = Array.apply(null, Array(5)).map((v, i) => {
         //Loop to make image array to show in slider

@@ -38,6 +38,12 @@ export default function PutOutRoom({navigation, route}) {
   const [img3,setImg3] = useState("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSl93ASaa2NdIwZutsY6l82DpqvKCI5B43XBQ&usqp=CAU")
   const [img4,setImg4] = useState("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSl93ASaa2NdIwZutsY6l82DpqvKCI5B43XBQ&usqp=CAU")
   const [img5,setImg5] = useState("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSl93ASaa2NdIwZutsY6l82DpqvKCI5B43XBQ&usqp=CAU")
+  
+  const [base1,setBase1] = useState("")
+  const [base2,setBase2] = useState("")
+  const [base3,setBase3] = useState("")
+  const [base4,setBase4] = useState("")
+  const [base5,setBase5] = useState("")
   const [post,setPost] = useState('주소')
   //컨텐츠 새로고침,데이터 갱신
   const isFocused = useIsFocused()
@@ -55,6 +61,18 @@ export default function PutOutRoom({navigation, route}) {
         setImg4(route.params.image4)}
       if(route.params.image5 != undefined){
         setImg5(route.params.image5)}
+
+      if(route.params.base1 != undefined){
+        setBase1(route.params.base1)}
+      if(route.params.base2 != undefined){
+        setBase2(route.params.base2)}
+      if(route.params.base3 != undefined){
+        setBase3(route.params.base3)}
+      if(route.params.base4 != undefined){
+        setBase4(route.params.base4)}
+      if(route.params.base5 != undefined){
+        setBase5(route.params.base5)}
+
       if(route.params.postcode != undefined){
         setPost(route.params.postcode)
         console.log("focused");
@@ -92,12 +110,46 @@ export default function PutOutRoom({navigation, route}) {
 
   let colour = ["#C4C4C4","#D84315"]
   const [show, setShow] = useState(false);
+  const [cond, setCond] = useState(false)
 
   let kind = ["원룸", "투룸 이상", "오피스텔", "아파트"]
   let method = ["단기임대","양도"]
   let type = ["월세","전세"]
   let sex = ["남성","여성","무관"]
   let cigar = ["비흡연","무관"]
+  const [oCols,setOCols]=useState([0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+  const [options,setOptions]=useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,])
+  //const [ocolour,setColours]=useState("#C4C4C4")
+  const onPressHandler=i=>{
+    let col = oCols.slice();
+    let op = options.slice();
+    if(col[i]==0){
+      col[i]=1;
+    }else{
+      col[i]=0;
+    }
+    if(op[i]==false){
+      op[i]=true;
+    }else{
+      op[i]=false;
+    }
+    setOCols(col)
+    setOptions(op)
+  }
 
   const onChange1 = (event, selectedDate) => {
     const currentDate = selectedDate || date1;
@@ -121,6 +173,11 @@ export default function PutOutRoom({navigation, route}) {
     col[i] = 1
     setMcol(col)
     setCategory(method[i])
+    if(i==1){
+      setCond(true);
+      sexColor(2)
+      cigarColor(1)
+    }
   }
   const typeColor = (i) =>{
     let col = [0,0]
@@ -169,32 +226,31 @@ export default function PutOutRoom({navigation, route}) {
       endDate : date2,
     },
     options:{
-      bed : true,
-      table : false,
-      chair : true,
-      closet : true,
-      airconditioner : true,
-      induction : true,
-      refrigerator : true,
-      tv : true,
-      doorlock : true,
-      microwave : true,
-      washingmachine : false,
-      cctv : true,
-      wifi : false,
-      parking : false,
-      elevator : false,
+      bed : options[0],
+      table : options[1],
+      refrigerator : options[2],
+      airconditioner : options[3],
+      chair : options[4],
+      closet : options[5],
+      washingmachine : options[6],
+      microwave : options[7],
+      wifi : options[8],
+      tv : options[9],
+      cctv : options[10],
+      parking : options[11],
+      elevator : options[12],
+      induction : options[13],
     },
     conditions:{
       gender : gender,
       smoking : smoking,
     },
     photo:{
-      main: img1,
-      restroom: img2,
-      kitchen: img3,
-      photo1: img4,
-      photo2: img5
+      main: base1,
+      restroom: base2,
+      kitchen: base3,
+      photo1: base4,
+      photo2: base5
       // main : base64.encode(img1),
       // restroom : base64.encode(img2),
       // kitchen : base64.encode(img3),
@@ -388,32 +444,74 @@ export default function PutOutRoom({navigation, route}) {
         <Text style = {styles.subTitle}>부가 옵션</Text>
         <View style = {styles.btnContainer}>
           <View style = {styles.twoBtnContainer}>
-            <OptionButton content="침대" img={bed}></OptionButton>
-            <OptionButton content="책상" img={desk}></OptionButton>
+            <TouchableOpacity style = {[styles.obutton,{borderColor:colour[oCols[0]]}]} onPress={()=>onPressHandler(0)}>
+              <Image style={styles.oimage} source={bed} ></Image>
+              <Text style = {styles.otext}>침대</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style = {[styles.obutton,{borderColor:colour[oCols[1]]}]} onPress={()=>onPressHandler(1)}>
+              <Image style={styles.oimage} source={desk} ></Image>
+              <Text style = {styles.otext}>책상</Text>
+            </TouchableOpacity>
           </View>
           <View style = {styles.twoBtnContainer}>
-            <OptionButton content="냉장고" img={fridge}></OptionButton>
-            <OptionButton content="에어컨" img={airconditioner}></OptionButton>
+            <TouchableOpacity style = {[styles.obutton,{borderColor:colour[oCols[2]]}]} onPress={()=>onPressHandler(2)}>
+              <Image style={styles.oimage} source={fridge} ></Image>
+              <Text style = {styles.otext}>냉장고</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style = {[styles.obutton,{borderColor:colour[oCols[3]]}]} onPress={()=>onPressHandler(3)}>
+              <Image style={styles.oimage} source={airconditioner} ></Image>
+              <Text style = {styles.otext}>에어컨</Text>
+            </TouchableOpacity>
           </View>
           <View style = {styles.twoBtnContainer}>
-            <OptionButton content="의자" img={chair}></OptionButton>
-            <OptionButton content="옷장" img={closet}></OptionButton>
+            <TouchableOpacity style = {[styles.obutton,{borderColor:colour[oCols[4]]}]} onPress={()=>onPressHandler(4)}>
+              <Image style={styles.oimage} source={chair} ></Image>
+              <Text style = {styles.otext}>의자</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style = {[styles.obutton,{borderColor:colour[oCols[5]]}]} onPress={()=>onPressHandler(5)}>
+              <Image style={styles.oimage} source={closet} ></Image>
+              <Text style = {styles.otext}>옷장</Text>
+            </TouchableOpacity>
           </View>
           <View style = {styles.twoBtnContainer}>
-            <OptionButton content="세탁기" img={washer}></OptionButton>
-            <OptionButton content="전자레인지" img={microwave}></OptionButton>
+          <TouchableOpacity style = {[styles.obutton,{borderColor:colour[oCols[6]]}]} onPress={()=>onPressHandler(6)}>
+              <Image style={styles.oimage} source={washer} ></Image>
+              <Text style = {styles.otext}>세탁기</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style = {[styles.obutton,{borderColor:colour[oCols[7]]}]} onPress={()=>onPressHandler(7)}>
+              <Image style={styles.oimage} source={microwave} ></Image>
+              <Text style = {styles.otext}>전자레인지</Text>
+            </TouchableOpacity>
           </View>
           <View style = {styles.twoBtnContainer}>
-            <OptionButton content="WIFI" img={wifi}></OptionButton>
-            <OptionButton content="TV" img={tv}></OptionButton>
+            <TouchableOpacity style = {[styles.obutton,{borderColor:colour[oCols[8]]}]} onPress={()=>onPressHandler(8)}>
+              <Image style={styles.oimage} source={wifi} ></Image>
+              <Text style = {styles.otext}>WIFI</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style = {[styles.obutton,{borderColor:colour[oCols[9]]}]} onPress={()=>onPressHandler(9)}>
+              <Image style={styles.oimage} source={tv} ></Image>
+              <Text style = {styles.otext}>TV</Text>
+            </TouchableOpacity>
           </View>
           <View style = {styles.twoBtnContainer}>
-            <OptionButton content="복도 CCTV" img={cctv}></OptionButton>
-            <OptionButton content="주차 가능" img={parking}></OptionButton>
+          <TouchableOpacity style = {[styles.obutton,{borderColor:colour[oCols[10]]}]} onPress={()=>onPressHandler(10)}>
+              <Image style={styles.oimage} source={cctv} ></Image>
+              <Text style = {styles.otext}>복도 CCTV</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style = {[styles.obutton,{borderColor:colour[oCols[11]]}]} onPress={()=>onPressHandler(11)}>
+              <Image style={styles.oimage} source={parking} ></Image>
+              <Text style = {styles.otext}>주차가능</Text>
+            </TouchableOpacity>
           </View>
           <View style = {styles.twoBtnContainer}>
-            <OptionButton content="엘리베이터" img={elevator}></OptionButton>
-            <OptionButton content="가스레인지" img={stove}></OptionButton>
+          <TouchableOpacity style = {[styles.obutton,{borderColor:colour[oCols[12]]}]} onPress={()=>onPressHandler(12)}>
+              <Image style={styles.oimage} source={elevator} ></Image>
+              <Text style = {styles.otext}>엘리베이터</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style = {[styles.obutton,{borderColor:colour[oCols[13]]}]} onPress={()=>onPressHandler(13)}>
+              <Image style={styles.oimage} source={stove} ></Image>
+              <Text style = {styles.otext}>가스레인지</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -422,22 +520,22 @@ export default function PutOutRoom({navigation, route}) {
         <Text style = {styles.subTitle}>조건</Text>
         <Text style = {styles.optionTitle}>성별</Text>
         <View style = {styles.smallBtnContainer}>
-          <TouchableOpacity style = {[styles.sButton,{backgroundColor:colour[scol[0]]}]} onPress={()=>sexColor(0)}>
+          <TouchableOpacity style = {[styles.sButton,{backgroundColor:colour[scol[0]]}]} onPress={()=>sexColor(0)} disabled={cond}>
               <Text style = {styles.sText}>{sex[0]}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style = {[styles.sButton,{backgroundColor:colour[scol[1]]}]} onPress={()=>sexColor(1)}>
+          <TouchableOpacity style = {[styles.sButton,{backgroundColor:colour[scol[1]]}]} onPress={()=>sexColor(1)} disabled={cond}>
               <Text style = {styles.sText}>{sex[1]}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style = {[styles.sButton,{backgroundColor:colour[scol[2]]}]} onPress={()=>sexColor(2)}>
+          <TouchableOpacity style = {[styles.sButton,{backgroundColor:colour[scol[2]]}]} onPress={()=>sexColor(2)} disabled={cond}>
               <Text style = {styles.sText}>{sex[2]}</Text>
           </TouchableOpacity>
         </View>
         <Text style = {styles.optionTitle}>흡연여부</Text>
         <View style = {styles.smallBtnContainer}>
-          <TouchableOpacity style = {[styles.sButton,{backgroundColor:colour[ccol[0]]}]} onPress={()=>cigarColor(0)}>
+          <TouchableOpacity style = {[styles.sButton,{backgroundColor:colour[ccol[0]]}]} onPress={()=>cigarColor(0)} disabled={cond}>
               <Text style = {styles.sText}>{cigar[0]}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style = {[styles.sButton,{backgroundColor:colour[ccol[1]]}]} onPress={()=>cigarColor(1)}>
+          <TouchableOpacity style = {[styles.sButton,{backgroundColor:colour[ccol[1]]}]} onPress={()=>cigarColor(1)} disabled={cond}>
               <Text style = {styles.sText}>{cigar[1]}</Text>
           </TouchableOpacity>
         </View>
@@ -763,4 +861,27 @@ const styles = StyleSheet.create({
       alignSelf:"center",
       fontWeight:"500",
   },
+  obutton : {
+    width:150,
+    height:50,
+    marginRight:5,
+    marginLeft:5,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius:5,
+    flexDirection:"row",
+    borderWidth:1,
+  },
+  oimage:{
+    margin:15,
+    height:23,
+    flex:1,
+    resizeMode:"stretch"
+  },
+  otext : {
+    color:"#000",
+    fontWeight:"500",
+    fontSize:15,
+    flex:4,
+  }
 })

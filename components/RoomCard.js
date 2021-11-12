@@ -1,6 +1,7 @@
 import React,{useEffect, useState} from "react"
 import {View,Text,Image,StyleSheet,TouchableOpacity} from "react-native";
 import axios from 'axios';
+import base64 from 'base-64'
 
 import room from "../iconimage/room.png"
 import heart from "../iconimage/heart.png"
@@ -19,7 +20,7 @@ export default function RoomCard({content,navigation}) {
       }
 
       if(content.type.rentType=="월세"){
-        setKind(content.type.rentType+" "+content.price.monthly+"만원/"+"보증금"+content.price.deposit)
+        setKind(content.type.rentType+" "+content.price.monthly+"만원/"+"보증금"+content.price.deposit+"만원")
       }else{
         setKind(content.type.rentType+" "+content.price.deposit+"만원")
       }
@@ -68,7 +69,7 @@ export default function RoomCard({content,navigation}) {
         <View style={styles.card}>
             <View style={styles.c1}>
                 <Image resizeMode={"cover"}
-                style={styles.roomImage} source={{uri:content.photo.main}}/>
+                style={styles.roomImage} source={{uri:base64.decode(content.photo.main)}}/>
             </View>
 
             <View style={styles.c2}>
