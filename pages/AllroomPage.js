@@ -11,12 +11,18 @@ export default function AllroomPage({navigation, route}) {
 //useEffect(()=>{
    // setState(notidata)
 //},[])
+const [ut,setut]=useState("")
+useEffect(()=>{
+  console.log(route.params);
+  console.log(route.params.u_token);
+  setut(route.params.u_token)
+},[])
 
 
 //서버에서 정보 받아와야 함
 const [room,setRoom] = useState(route.params.content.data.rooms);
 console.log("넘어오긴 하나,,,")
-console.log(route.params.content.data.rooms)
+console.log(route.params.content)
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -24,7 +30,7 @@ console.log(route.params.content.data.rooms)
             {/* 하나의 카드 영역을 나타내는 View */}
             {
             room.map((content,i)=>{
-                return (<RoomCard content={content} key={i} navigation={navigation}/>)
+                return (<RoomCard content={content} key={i} navigation={navigation} ut={ut} />)
             })
             }
           </View>

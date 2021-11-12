@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import MapView, { Circle, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions, Image, TouchableOpacity } from 'react-native';
 
@@ -11,7 +11,14 @@ import profile from '../assets/profile.png'
 import axios from 'axios';
 
 
-export default function MainPage({navigation}) {
+export default function MainPage({navigation,route}) {
+  //유저 토큰
+  const [ut,setut]=useState("")
+  useEffect(()=>{
+    console.log(route.params);
+    console.log(route.params.u_token);
+    setut(route.params.u_token)
+  },[])
   const [colour1,setColours1]=useState("#C4C4C4")
   const onPressHandler1=color=>{
     if (color==="#D84315"){
@@ -140,7 +147,7 @@ export default function MainPage({navigation}) {
         bottom:80,
         flexDirection:"row"
       }]}
-      onPress={()=>{navigation.navigate('방 내놓기')}}>
+      onPress={()=>{navigation.navigate('방 내놓기', {u_token : ut})}}>
         <Image source={homeplus} style={{
           flex:2,
           alignSelf:"center",
@@ -157,12 +164,12 @@ export default function MainPage({navigation}) {
       <TouchableOpacity style = {styles.cButton} onPress={()=>
         axios.get(`http://54.180.160.150:5000/api/v1/room?offset=0&limit=5`,{
           headers: {
-            Authorization : `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJRCI6MjR9LCJpYXQiOjE2MzY0NDE2MzUsImV4cCI6MTYzNzY1MTIzNX0.1XGUeQ7tQ23nQcT3iLAtVFoEO_govS9cHED71LRYbCc`
+            Authorization : ut
           }
         })
         .then((response)=>{
           //console.log(response.data);
-          navigation.navigate("모든 방 보기",{content:response.data})
+          navigation.navigate("모든 방 보기",{content:response.data, u_token : response.data.token})
         })
         .catch((error)=>{
           if (error.response) {

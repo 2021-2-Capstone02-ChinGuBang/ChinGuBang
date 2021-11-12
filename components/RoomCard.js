@@ -7,11 +7,13 @@ import room from "../iconimage/room.png"
 import heart from "../iconimage/heart.png"
 import {Ionicons} from "@expo/vector-icons";
 //비구조 할당 방식으로 넘긴 속성 데이터를 꺼내 사용함
-export default function RoomCard({content,navigation}) {
+export default function RoomCard({content,navigation,ut}) {
 
     const [kind,setKind]=useState("월세")
     const [pick,setPick]=useState(0)
     const [date,setDate]=useState("")
+    console.log(ut)
+    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJRCI6NTZ9LCJpYXQiOjE2MzY2OTIzNzcsImV4cCI6MTYzNzkwMTk3N30.Cy1YFpkTgK4_yOpaX0EBHenUqsiWB7qaaIRTvrsTj9k"
     let main = content.photo.main
     useEffect(()=>{
       if(content.likes.length==0){
@@ -37,7 +39,7 @@ export default function RoomCard({content,navigation}) {
         <TouchableOpacity onPress={()=>{
           axios.get(`http://54.180.160.150:5000/api/v1/room/`+content.roomID,{
             headers:{
-                Authorization:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJRCI6MjR9LCJpYXQiOjE2MzY0NDE2MzUsImV4cCI6MTYzNzY1MTIzNX0.1XGUeQ7tQ23nQcT3iLAtVFoEO_govS9cHED71LRYbCc",
+                Authorization:token,
             }
         })
         .then((response)=>{

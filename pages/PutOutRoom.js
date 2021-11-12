@@ -39,6 +39,15 @@ export default function PutOutRoom({navigation, route}) {
   const [img4,setImg4] = useState("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSl93ASaa2NdIwZutsY6l82DpqvKCI5B43XBQ&usqp=CAU")
   const [img5,setImg5] = useState("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSl93ASaa2NdIwZutsY6l82DpqvKCI5B43XBQ&usqp=CAU")
   
+  //유저 토큰
+  const [ut,setut]=useState("")
+  useEffect(()=>{
+    console.log(route.params);
+    console.log(route.params.u_token);
+    setut(route.params.u_token)
+  },[])
+
+
   const [base1,setBase1] = useState("")
   const [base2,setBase2] = useState("")
   const [base3,setBase3] = useState("")
@@ -105,8 +114,6 @@ export default function PutOutRoom({navigation, route}) {
   const [area,setArea] = useState(0)
   const [floor,setFloor] = useState(0)
   const [construction,setConstruction] = useState(0)
-
-  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInVzZXJFbWFpbCI6InJ1cnVAZW1haWwuY29tIiwiaWF0IjoxNjA5MzQ5MDc2fQ.oG0IUwH9W07XOLVEABDVwSPHpFqjjy8tu9QIixLMqpc"
 
   let colour = ["#C4C4C4","#D84315"]
   const [show, setShow] = useState(false);
@@ -594,7 +601,7 @@ export default function PutOutRoom({navigation, route}) {
       <TouchableOpacity style = {styles.cButton} onPress={()=>
       axios.post(`http://54.180.160.150:5000/api/v1/room`,JSON.stringify(form),{
         headers: {
-          Authorization : `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJRCI6MjR9LCJpYXQiOjE2MzY0NDE2MzUsImV4cCI6MTYzNzY1MTIzNX0.1XGUeQ7tQ23nQcT3iLAtVFoEO_govS9cHED71LRYbCc`,
+          Authorization : ut,
           "content-type" : "application/json"
         }
       })

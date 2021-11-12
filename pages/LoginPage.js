@@ -126,7 +126,7 @@ const getItem = (item) => {
                                     {
                                         //console.log(response); 
                                         console.log(response.data);
-			                                if(response.data.message =="로그인 성공")navigation.navigate('MainPage')
+			                                if(response.data.message =="로그인 성공")navigation.navigate('MainPage',{u_token : response.data.token})
                                                 
 			                               })
                                     .catch(function (error) {console.log(error); alert("로그인 실패! 아이디랑 비번 다시 입력 해주세요");})}>
