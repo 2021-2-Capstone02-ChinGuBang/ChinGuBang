@@ -12,6 +12,7 @@ export default function RoomCard({content,navigation}) {
     const [kind,setKind]=useState("월세")
     const [pick,setPick]=useState(0)
     const [date,setDate]=useState("")
+    let main = content.photo.main
     useEffect(()=>{
       if(content.likes.length==0){
         setPick(0);
@@ -69,7 +70,7 @@ export default function RoomCard({content,navigation}) {
         <View style={styles.card}>
             <View style={styles.c1}>
                 <Image resizeMode={"cover"}
-                style={styles.roomImage} source={{uri:base64.decode(content.photo.main)}}/>
+                style={styles.roomImage} source={`data:image/png;base64,${main}`}/>
             </View>
 
             <View style={styles.c2}>
