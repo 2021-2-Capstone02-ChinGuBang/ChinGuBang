@@ -161,7 +161,7 @@ export default function PutOutRoom({navigation, route}) {
       area : area,
       floor: floor,
       construction : construction,
-      address: post+address,
+      address: post+" "+address,
       description : description,
     },
     rentPeriod:{
@@ -190,6 +190,11 @@ export default function PutOutRoom({navigation, route}) {
       smoking : smoking,
     },
     photo:{
+      main: img1,
+      restroom: img2,
+      kitchen: img3,
+      photo1: img4,
+      photo2: img5
       // main : base64.encode(img1),
       // restroom : base64.encode(img2),
       // kitchen : base64.encode(img3),
@@ -288,7 +293,7 @@ export default function PutOutRoom({navigation, route}) {
           }}/>
         </TouchableOpacity> */}
         <Postcode
-          style={{ width: "100%", height: 650 }}
+          style={{ width: "100%", height: 500 }}
           jsOptions={{ animation: true }}
           onSelected={ data=>{
             //console.log(JSON.stringify(data.address))
