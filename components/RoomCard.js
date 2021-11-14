@@ -30,9 +30,9 @@ export default function RoomCard({content,navigation,ut}) {
       }
 
       if(content.type.category=="단기임대"){
-        setDate(content.rentPeriod.startDate.toString().slice(0,10)+" ~ "+content.rentPeriod.endDate.toString().slice(0,10))
+        setDate(content.rentPeriod.startDate+" ~ "+content.rentPeriod.endDate)
       }else{
-        setDate(content.rentPeriod.startDate.toString().slice(0,10))
+        setDate(content.rentPeriod.startDate)
       }
     },[])
 

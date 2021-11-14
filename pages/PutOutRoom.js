@@ -60,42 +60,54 @@ export default function PutOutRoom({navigation, route}) {
 
   useEffect(() => {
     if (isFocused) {
+      console.log("Focused")
       if(route.params != undefined){
       if(route.params.image1 != undefined){
+        console.log(route.params.image1)
         setImg1(route.params.image1)
         setFile1({
-          uri:img1,
+          uri: route.params.image1,
           type: 'image/jpg',
           name: 'main.jpg'
-        })}
+        })
+        console.log(img1)
+      }
       if(route.params.image2 != undefined){
+        console.log(img1)
+        console.log(route.params.image2)
         setImg2(route.params.image2)
         setFile2({
-          uri:img2,
+          uri:route.params.image2,
           type: 'image/jpg',
           name: 'kitchen.jpg'
-        })}
+        })
+        console.log(img2)
+      }
+
       if(route.params.image3 != undefined){
-        setImg3(route.params.image3)
+        setImg3(route.params.image3)  
         setFile3({
-          uri:img3,
+          uri:route.params.image3,
           type: 'image/jpg',
           name: 'restroom.jpg'
-        })}
+        })
+        }
       if(route.params.image4 != undefined){
         setImg4(route.params.image4)
         setFile4({
-          uri:img4,
+          uri:route.params.image4,
           type: 'image/jpg',
           name: 'photo1.jpg'
-        })}
+        })
+        }
       if(route.params.image5 != undefined){
         setImg5(route.params.image5)
         setFile5({
-          uri:img5,
+          uri:route.params.image5,
           type: 'image/jpg',
           name: 'photo2.jpg'
-        })}
+        })
+        }
 
       if(route.params.base1 != undefined){
         setBase1(route.params.base1)}
@@ -112,9 +124,13 @@ export default function PutOutRoom({navigation, route}) {
         setPost(route.params.postcode)
         console.log("focused");
       }
-      }
     }
-  }, [isFocused])
+    }
+
+
+
+  
+}, [isFocused])
 
   const [date1, setDate1] = useState(new Date(1598051730000));
   const [date2, setDate2] = useState(new Date(1598051730000));
@@ -129,6 +145,7 @@ export default function PutOutRoom({navigation, route}) {
   const [category, setCategory] = useState('')
   const [rent, setRent] = useState('')
   const [address, setAddress] = useState('')
+  const [query, setQuery] = useState('')
 
   const [description, setDescription] = useState('')
   const [gender, setGender] = useState('')
@@ -264,6 +281,7 @@ export default function PutOutRoom({navigation, route}) {
       floor: floor,
       construction : construction,
       address: post+" "+address,
+      query: query,
       description : description,
     },
     rentPeriod:{
@@ -339,6 +357,7 @@ export default function PutOutRoom({navigation, route}) {
     name: 'photo2.jpg'
   })
   form.append('type[roomType]',room)
+  form.append('type[rentType]',rent)
   form.append('type[category]',category)
   form.append('price[deposit]',deposit)
   form.append('price[monthly]',monthly)
@@ -348,9 +367,10 @@ export default function PutOutRoom({navigation, route}) {
   form.append('information[construction]',construction)
   form.append('information[post]',post)
   form.append('information[address]',address)
+  form.append('information[query]',query)
   form.append('information[description]',description)
-  form.append('rentPeriod[startDate]',date1)
-  form.append('rentPeriod[endDate]',date2)
+  form.append('rentPeriod[startDate]',date1.toLocaleDateString())
+  form.append('rentPeriod[endDate]',date2.toLocaleDateString())
   form.append('options[bed]',options[0])
   form.append('options[table]',options[1])
   form.append('options[refrigerator]',options[2])
@@ -466,10 +486,9 @@ export default function PutOutRoom({navigation, route}) {
           onSelected={ data=>{
             //console.log(JSON.stringify(data.address))
             setPost(data.address)
-            console.log(post)
-            navigation.navigate('방 내놓기'),{"postcode": data.address}
-            console.log(post)
-            Alert.alert("주소 선택 완료!",post);
+            //navigation.navigate('방 내놓기'),{"postcode": data.address}
+            setQuery(data.query)
+            Alert.alert("주소 선택 완료!",data.address);
           }}
       />
         <Text style={styles.textInputStyle}>{post}</Text>
