@@ -30,31 +30,35 @@ import roomImage from "../assets/roomImage.png"
 export default function RoomPage({navigation, route}) {
     const[long,setLong] = useState(0)
     const[lat,setLat] = useState(0)
+    const[ut,setUt]=useState('')
     useEffect(()=>{
-        fetch('http://maps.google.com/maps/api/geocode/json?address=' + route.params.content.post).then(function(res){
-            setLong(res.result.geometry.location.lng);
-            setLat(res.result.geometry.location.lat)
-        })
-        .catch(function(error) {
-            if (error.response) {
-              // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
-              console.log(error.response.data);
-              console.log(error.response.status);
-              //console.log(error.response.headers);
-            }
-            else if (error.request) {
-              // 요청이 이루어 졌으나 응답을 받지 못했습니다.
-              // `error.request`는 브라우저의 XMLHttpRequest 인스턴스 또는
-              // Node.js의 http.ClientRequest 인스턴스입니다.
-              console.log(error.request);
-            }
-            else {
-              // 오류를 발생시킨 요청을 설정하는 중에 문제가 발생했습니다.
-              console.log('Error', error.message);
-            }
-            console.log(error.config);
-            //Alert.alert(JSON.stringify(error.response.status))
-          });
+        setUt(route.params.u_t)
+        console.log("ut는 이거다",route.params.u_t)
+        console.log(ut)
+        // fetch('http://maps.google.com/maps/api/geocode/json?address=' + route.params.content.post).then(function(res){
+        //     setLong(res.result.geometry.location.lng);
+        //     setLat(res.result.geometry.location.lat)
+        // })
+        // .catch(function(error) {
+        //     if (error.response) {
+        //       // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
+        //       console.log(error.response.data);
+        //       console.log(error.response.status);
+        //       //console.log(error.response.headers);
+        //     }
+        //     else if (error.request) {
+        //       // 요청이 이루어 졌으나 응답을 받지 못했습니다.
+        //       // `error.request`는 브라우저의 XMLHttpRequest 인스턴스 또는
+        //       // Node.js의 http.ClientRequest 인스턴스입니다.
+        //       console.log(error.request);
+        //     }
+        //     else {
+        //       // 오류를 발생시킨 요청을 설정하는 중에 문제가 발생했습니다.
+        //       console.log('Error', error.message);
+        //     }
+        //     console.log(error.config);
+        //     //Alert.alert(JSON.stringify(error.response.status))
+        //   });
         
     },[])
     const [room, setRoom] = useState(route.params.content)
@@ -269,8 +273,9 @@ export default function RoomPage({navigation, route}) {
                 </TouchableOpacity>
             </View>
             <TouchableOpacity style = {styles.cButton} onPress={()=>
-            {
-                navigation.navigate("MainPage")
+            {   
+                console.log("ut 확인용",ut)
+                navigation.navigate("쪽지 보내기")
             }}>
                 <Text style = {styles.cText}>쪽지 보내기</Text>
             </TouchableOpacity>        

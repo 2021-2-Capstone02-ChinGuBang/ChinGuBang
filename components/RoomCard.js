@@ -6,6 +6,7 @@ import base64 from 'base-64'
 import room from "../iconimage/room.png"
 import heart from "../iconimage/heart.png"
 import {Ionicons} from "@expo/vector-icons";
+import { unstable_batchedUpdates } from "react-dom";
 //비구조 할당 방식으로 넘긴 속성 데이터를 꺼내 사용함
 export default function RoomCard({content,navigation,ut}) {
 
@@ -13,9 +14,11 @@ export default function RoomCard({content,navigation,ut}) {
     const [pick,setPick]=useState(0)
     const [date,setDate]=useState("")
     const [u_t,setUt] = useState("")
-    console.log(u_t)
     let main = content.photo.main
     useEffect(()=>{
+      console.log("#############################################")
+      console.log(content)
+      console.log("#############################################")
       if(content.likes.length==0){
         setPick(0);
       }else{
@@ -29,11 +32,12 @@ export default function RoomCard({content,navigation,ut}) {
       }
 
       if(content.type.category=="단기임대"){
-        setDate(content.rentPeriod.startDate.slice(0,10)+" ~ "+content.rentPeriod.endDate.slice(0,10))
+        setDate(content.rentPeriod.startDate.toString().slice(0,10)+" ~ "+content.rentPeriod.endDate.toString().slice(0,10))
       }else{
-        setDate(content.rentPeriod.startDate.slice(0,10))
+        setDate(content.rentPeriod.startDate.toString().slice(0,10))
       }
       setUt(ut)
+      console.log(u_t)
     },[])
 
     return (
@@ -46,7 +50,7 @@ export default function RoomCard({content,navigation,ut}) {
         .then((response)=>{
             console.log(response.data);
             console.log("이거 맞나")
-            navigation.navigate('방 보기',{content: response.data})
+            navigation.navigate('방 보기',{content: response.data, u_t:u_t})
         })
         .catch((error)=>{
           if (error.response) {
