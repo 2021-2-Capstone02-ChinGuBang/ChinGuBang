@@ -1,10 +1,7 @@
-import React,{useState} from 'react';
-import { ScrollView,StyleSheet, Text,View, TextInput, Alert,TouchableOpacity } from 'react-native';
+import React,{useState,useEffect} from 'react';
+import { ScrollView,StyleSheet, Text,View, TextInput, Alert,TouchableOpacity,Image } from 'react-native';
 
-import RedButton from '../components/RedButton'
-import OptionButton from '../components/OptionButton'
-import SmallButton from '../components/SmallButton'
-import Confirm from '../components/Confirm'
+import axios from 'axios';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 
@@ -28,8 +25,8 @@ import stove from "../assets/stove.png"
 
 
 export default function FilterPage({navigation,route}) {
-  const [date1, setDate1] = useState(new Date(1598051730000));
-  const [date2, setDate2] = useState(new Date(1598051730000));
+  const [date1, setDate1] = useState(new Date());
+  const [date2, setDate2] = useState(new Date());
   const [show, setShow] = useState(false);
   const [kcol, setKcol] = useState([0,0,0,0])
   const [mcol, setMcol] = useState([0,0])
@@ -47,6 +44,7 @@ export default function FilterPage({navigation,route}) {
   const [gender, setGender] = useState([])
   const [smoking, setSmoking] = useState([])
 
+  let colour = ["#C4C4C4","#D84315"]
   let kind = ["원룸", "투룸 이상", "오피스텔", "아파트"]
   let method = ["단기임대","양도"]
   let type = ["월세","전세"]
@@ -153,7 +151,7 @@ export default function FilterPage({navigation,route}) {
 
     for(;i<col.length;i++){
       if(col[i]==1){
-        opts.append(arr[i])
+        opts.push(arr[i])
       }
     }
     return opts
@@ -161,7 +159,7 @@ export default function FilterPage({navigation,route}) {
 
 
   const onConfirm=()=>{
-    let i = 0;
+    console.log("적용 좀 해봐라")
     setRoom(addConds(kcol,kind))
     setCategory(addConds(mcol,method))
     setRent(addConds(tcol,type))
@@ -170,7 +168,7 @@ export default function FilterPage({navigation,route}) {
 
     axios.post(`http://54.180.160.150:5000/api/v1/room/filter`,form,{
         headers: {
-          Authorization : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJRCI6NjV9LCJpYXQiOjE2MzY3MDQyMDMsImV4cCI6MTYzNzkxMzgwM30.BTheGanFvMs0RyxvoqxZkFzgeUPjAaqOHB8K_5FJOfY",
+          Authorization : ut,
           "Content-Type": `application/json`
         }
       })
@@ -237,8 +235,8 @@ let form = {
     //   description : description,
     // },
     rentPeriod:{
-      startDate : date1.toLocaleDateString(),
-      endDate : date2.toLocaleDateString(),
+      startDate : date1,
+      endDate : date2,
     },
     options:{
       bed : options[0],
@@ -316,7 +314,7 @@ let form = {
         <Text style = {styles.subTitle}>임대 기간</Text>
 
         <View style = {styles.twoPicker}>
-          <DateTimePicker style={styles.date} minimumDate={new Date(2021,10,1)} maximumDate={new Date(2050,0,1)}
+          <DateTimePicker style={styles.date} minimumDate={new Date()} maximumDate={new Date(2050,0,1)}
               testID="dateTimePicker"
               value={date1}
               mode='date'
@@ -329,7 +327,7 @@ let form = {
               fontSize:20,
               fontWeight:'700'
           }]}>~</Text>
-          <DateTimePicker style={styles.date} minimumDate={new Date(2021,10,1)} maximumDate={new Date(2050,0,1)}
+          <DateTimePicker style={styles.date} minimumDate={new Date()} maximumDate={new Date(2050,0,1)}
               testID="dateTimePicker"
               value={date2}
               mode='date'
@@ -476,8 +474,46 @@ let form = {
           </TouchableOpacity>
         </View>
       </View>
-      <TouchableOpacity style = {styles.cButton} onPress={()=>onConfirm
-      }>
+      <TouchableOpacity style = {styles.cButton} onPress={()=>{
+    console.log("적용 좀 해봐라")
+    setRoom(addConds(kcol,kind))
+    setCategory(addConds(mcol,method))
+    setRent(addConds(tcol,type))
+    setGender(addConds(scol,sex))
+    setSmoking(addConds(ccol,cigar))
+
+    axios.post(`http://54.180.160.150:5000/api/v1/room/filter`,form,{
+        headers: {
+          Authorization : ut,
+          "Content-Type": `application/json`
+        }
+      })
+      .then(function(response){
+        console.log(response)
+        navigation.navigate("모든 방 보기",{content:response.data, u_token : ut})
+        Alert.alert("필터가 적용되었습니다.")
+      })
+      .catch(function(error) {
+        if (error.response) {
+          // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
+          console.log(error.response.data);
+          console.log(error.response.status);
+          //console.log(error.response.headers);
+        }
+        else if (error.request) {
+          // 요청이 이루어 졌으나 응답을 받지 못했습니다.
+          // `error.request`는 브라우저의 XMLHttpRequest 인스턴스 또는
+          // Node.js의 http.ClientRequest 인스턴스입니다.
+          console.log(error.request);
+        }
+        else {
+          // 오류를 발생시킨 요청을 설정하는 중에 문제가 발생했습니다.
+          console.log('Error', error.message);
+        }
+        console.log(error.config);
+        //Alert.alert(JSON.stringify(error.response.status))
+      })
+  }}>
         <Text style = {styles.cText}>적용하기</Text>
       </TouchableOpacity>
     </ScrollView>
@@ -624,6 +660,18 @@ const styles = StyleSheet.create({
     borderRadius:5,
   },
   sText : {
+    color:"#FFF",
+    fontWeight:"700",
+    fontSize:20,
+  },
+  cButton : {
+    width:"100%",
+    height:72.5,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor:"#D84315"
+  },
+  cText : {
     color:"#FFF",
     fontWeight:"700",
     fontSize:20,

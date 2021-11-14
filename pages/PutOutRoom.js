@@ -132,8 +132,8 @@ export default function PutOutRoom({navigation, route}) {
   
 }, [isFocused])
 
-  const [date1, setDate1] = useState(new Date(1598051730000));
-  const [date2, setDate2] = useState(new Date(1598051730000));
+  const [date1, setDate1] = useState(new Date());
+  const [date2, setDate2] = useState(new Date());
 
   const [kcol, setKcol] = useState([0,0,0,0])
   const [mcol, setMcol] = useState([0,0])
@@ -447,7 +447,7 @@ export default function PutOutRoom({navigation, route}) {
       <View style = {styles.components}>
         <Text style = {styles.subTitle}>임대 기간</Text>
         <View style = {styles.twoPicker}>
-          <DateTimePicker style={styles.date} minimumDate={new Date(2021,10,1)} maximumDate={new Date(2050,0,1)}
+          <DateTimePicker style={styles.date} minimumDate={new Date()} maximumDate={new Date(2050,0,1)}
               testID="dateTimePicker"
               value={date1}
               mode='date'
@@ -460,7 +460,7 @@ export default function PutOutRoom({navigation, route}) {
               fontSize:20,
               fontWeight:'700'
           }]}>~</Text>
-          <DateTimePicker style={styles.date} minimumDate={new Date(2021,10,1)} maximumDate={new Date(2050,0,1)}
+          <DateTimePicker style={styles.date} minimumDate={new Date()} maximumDate={new Date(2050,0,1)}
               testID="dateTimePicker"
               value={date2}
               mode='date'
@@ -725,7 +725,7 @@ export default function PutOutRoom({navigation, route}) {
       <TouchableOpacity style = {styles.cButton} onPress={()=>
       axios.post(`http://54.180.160.150:5000/api/v1/room`,form,{
         headers: {
-          Authorization : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJRCI6NjV9LCJpYXQiOjE2MzY3MDQyMDMsImV4cCI6MTYzNzkxMzgwM30.BTheGanFvMs0RyxvoqxZkFzgeUPjAaqOHB8K_5FJOfY",
+          Authorization : ut,
           "content-type" : "multipart/form-data"
         }
       })

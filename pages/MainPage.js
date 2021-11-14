@@ -136,7 +136,7 @@ export default function MainPage({navigation,route}) {
       <TouchableOpacity style={[styles.condition,{position:'absolute',
         right:10,
         top:95,width:60,flexDirection:"row",backgroundColor:"#fff",borderWidth:2,borderRadius:5,borderColor:"#D84315"}]}
-        onPress={()=>{navigation.navigate('전체 필터'),{u_token:ut}}}>
+        onPress={()=>{navigation.navigate('전체 필터',{u_token:ut})}}>
           <Image source={filter} style={{alignSelf:"center"}}/>
           <Text style={styles.conditionText}>필터</Text>
         </TouchableOpacity>
