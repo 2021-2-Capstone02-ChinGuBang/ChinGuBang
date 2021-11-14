@@ -62,15 +62,40 @@ export default function PutOutRoom({navigation, route}) {
     if (isFocused) {
       if(route.params != undefined){
       if(route.params.image1 != undefined){
-        setImg1(route.params.image1)}
+        setImg1(route.params.image1)
+        setFile1({
+          uri:img1,
+          type: 'image/jpg',
+          name: 'main.jpg'
+        })}
       if(route.params.image2 != undefined){
-        setImg2(route.params.image2)}
+        setImg2(route.params.image2)
+        setFile2({
+          uri:img2,
+          type: 'image/jpg',
+          name: 'kitchen.jpg'
+        })}
       if(route.params.image3 != undefined){
-        setImg3(route.params.image3)}
+        setImg3(route.params.image3)
+        setFile3({
+          uri:img3,
+          type: 'image/jpg',
+          name: 'restroom.jpg'
+        })}
       if(route.params.image4 != undefined){
-        setImg4(route.params.image4)}
+        setImg4(route.params.image4)
+        setFile4({
+          uri:img4,
+          type: 'image/jpg',
+          name: 'photo1.jpg'
+        })}
       if(route.params.image5 != undefined){
-        setImg5(route.params.image5)}
+        setImg5(route.params.image5)
+        setFile5({
+          uri:img5,
+          type: 'image/jpg',
+          name: 'photo2.jpg'
+        })}
 
       if(route.params.base1 != undefined){
         setBase1(route.params.base1)}
@@ -288,11 +313,31 @@ export default function PutOutRoom({navigation, route}) {
       // photo2 : img5.base64,
     }
   }
-  let file = {
+  const [file1,setFile1] = useState({
     uri:img1,
-    type: 'multipart/form-data',
+    type: 'image/jpg',
     name: 'main.jpg'
-  }
+  })
+  const [file2,setFile2] = useState({
+    uri:img2,
+    type: 'image/jpg',
+    name: 'kitchen.jpg'
+  })
+  const [file3,setFile3] = useState({
+    uri:img3,
+    type: 'image/jpg',
+    name: 'restroom.jpg'
+  })
+  const [file4,setFile4] = useState({
+    uri:img4,
+    type: 'image/jpg',
+    name: 'photo1.jpg'
+  })
+  const [file5,setFile5] = useState({
+    uri:img5,
+    type: 'image/jpg',
+    name: 'photo2.jpg'
+  })
   form.append('type[roomType]',room)
   form.append('type[category]',category)
   form.append('price[deposit]',deposit)
@@ -322,11 +367,11 @@ export default function PutOutRoom({navigation, route}) {
   form.append('options[induction]',options[13])
   form.append('conditions[gender]',gender)
   form.append('conditions[smoking]',smoking)
-  form.append('main',base1)
-  form.append('restroom',base2)
-  form.append('kitchen',base3)
-  form.append('photo1',base4)
-  form.append('photo2',base5)
+  form.append('main',file1)
+  form.append('restroom',file2)
+  form.append('kitchen',file3)
+  form.append('photo1',file4)
+  form.append('photo2',file5)
  
 
 
