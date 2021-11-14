@@ -12,9 +12,8 @@ export default function RoomCard({content,navigation,ut}) {
     const [kind,setKind]=useState("월세")
     const [pick,setPick]=useState(0)
     const [date,setDate]=useState("")
-    const [u_t,setUt] = useState(ut)
-    console.log(ut)
-    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJRCI6NjV9LCJpYXQiOjE2MzY2OTg2NzAsImV4cCI6MTYzNzkwODI3MH0.w4x-WWrYoc7H1bATmTfZSnEnno9HDRNTrbiEKRv4fq8"
+    const [u_t,setUt] = useState("")
+    console.log(u_t)
     let main = content.photo.main
     useEffect(()=>{
       if(content.likes.length==0){
@@ -30,10 +29,11 @@ export default function RoomCard({content,navigation,ut}) {
       }
 
       if(content.type.category=="단기임대"){
-        setDate(content.rentPeriod.startDate+" ~ "+content.rentPeriod.endDate)
+        setDate(content.rentPeriod.startDate.slice(0,10)+" ~ "+content.rentPeriod.endDate.slice(0,10))
       }else{
-        setDate(content.rentPeriod.startDate)
+        setDate(content.rentPeriod.startDate.slice(0,10))
       }
+      setUt(ut)
     },[])
 
     return (

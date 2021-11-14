@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import { ScrollView,StyleSheet, Text,View, TextInput, Alert } from 'react-native';
+import { ScrollView,StyleSheet, Text,View, TextInput, Alert,TouchableOpacity } from 'react-native';
 
 import RedButton from '../components/RedButton'
 import OptionButton from '../components/OptionButton'
@@ -27,7 +27,7 @@ import stove from "../assets/stove.png"
 
 
 
-export default function FilterPage({navigation}) {
+export default function FilterPage({navigation,route}) {
   const [date1, setDate1] = useState(new Date(1598051730000));
   const [date2, setDate2] = useState(new Date(1598051730000));
   const [show, setShow] = useState(false);
@@ -40,43 +40,63 @@ export default function FilterPage({navigation}) {
   const [monthly, setMonthly] = useState(0)
   const [dateCond, setDateCond] = useState(false)
   const [cond, setCond] = useState(false)
-  const [room, setRoom] = useState('')
-  const [category, setCategory] = useState('')
-  const [rent, setRent] = useState('')
-  const [gender, setGender] = useState('')
-  const [smoking, setSmoking] = useState('')
-  
+
+  const [room, setRoom] = useState([])
+  const [category, setCategory] = useState([])
+  const [rent, setRent] = useState([])
+  const [gender, setGender] = useState([])
+  const [smoking, setSmoking] = useState([])
+
+  let kind = ["원룸", "투룸 이상", "오피스텔", "아파트"]
+  let method = ["단기임대","양도"]
+  let type = ["월세","전세"]
+  let sex = ["남성","여성","무관"]
+  let cigar = ["비흡연","무관"]
+
+  const [ut,setut]=useState("")
+  useEffect(()=>{
+    console.log(route.params);
+    console.log(route.params.u_token);
+    setut(route.params.u_token)
+    console.log(ut)
+  },[])
+
   const kindColor = (i) =>{
-    let col = [0,0,0,0]
-    col[i] = 1
-    setKcol(col)
-    setRoom(kind[i])
-  }
-  const methodColor = (i) =>{
-    let col = [0,0]
-    col[i] = 1
-    setMcol(col)
-    setCategory(method[i])
-    // if(i==1){
-    //   setCond(true);
-    //   sexColor(2)
-    //   cigarColor(1)
-    // }else{
-    //   setCond(false);
-    // }
-    if(1==1){
-      setDateCond(true)
-      Alert.alert("양도 선택 시 원 임차인(집주인)과의 계약을 상정하므로 마감(?) 날짜 선택이 비활성화 됩니다.")
+    let col = kcol.slice()
+    if(col[i]==0){
+      col[i] = 1
     }
     else{
-      setDateCond(false)
+      col[i]=0
     }
+    setKcol(col)
+  }
+  const methodColor = (i) =>{
+    let col = mcol.slice()
+    if(col[i]==0){
+      col[i] = 1
+    }
+    else{
+      col[i]=0
+    }
+    setMcol(col)
+    // if(i==1){
+    //   setDateCond(true)
+    //   Alert.alert("양도 선택 시 원 임차인(집주인)과의 계약을 상정하므로 마감(?) 날짜 선택이 비활성화 됩니다.")
+    // }
+    // else{
+    //   setDateCond(false)
+    // }
   }
   const typeColor = (i) =>{
-    let col = [0,0]
-    col[i] = 1
+    let col = tcol.slice()
+    if(col[i]==0){
+      col[i] = 1
+    }
+    else{
+      col[i]=0
+    }
     setTcol(col)
-    setRent(type[i])
   }
   const onChange1 = (event, selectedDate) => {
     const currentDate = selectedDate || date1;
@@ -89,21 +109,24 @@ export default function FilterPage({navigation}) {
     setDate2(currentDate);
   };
   const sexColor = (i) =>{
-    let col = [0,0,0]
-    col[i] = 1
-    setScol(col)
-    setGender(sex[i])
-  }
-  const cigarColor = (i) =>{
-    let col = [0,0]
-    col[i] = 1
-    setCcol(col)
-    if (i==0){
-      setSmoking('비흡연')
+    let col = scol.slice()
+    if(col[i]==0){
+      col[i] = 1
     }
     else{
-      setSmoking('무관')
+      col[i]=0
     }
+    setScol(col)
+  }
+  const cigarColor = (i) =>{
+    let col = ccol.slice()
+    if(col[i]==0){
+      col[i] = 1
+    }
+    else{
+      col[i]=0
+    }
+    setCcol(col)
   }
 
   const [oCols,setOCols]=useState([0,0,0,0,0,0,0,0,0,0,0,0,0,0])
@@ -123,6 +146,61 @@ export default function FilterPage({navigation}) {
     false,
     false,])
   //const [ocolour,setColours]=useState("#C4C4C4")
+
+  const addConds=(col,arr)=>{
+    let i = 0;
+    var opts = []
+
+    for(;i<col.length;i++){
+      if(col[i]==1){
+        opts.append(arr[i])
+      }
+    }
+    return opts
+  }
+
+
+  const onConfirm=()=>{
+    let i = 0;
+    setRoom(addConds(kcol,kind))
+    setCategory(addConds(mcol,method))
+    setRent(addConds(tcol,type))
+    setGender(addConds(scol,sex))
+    setSmoking(addConds(ccol,cigar))
+
+    axios.post(`http://54.180.160.150:5000/api/v1/room/filter`,form,{
+        headers: {
+          Authorization : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJRCI6NjV9LCJpYXQiOjE2MzY3MDQyMDMsImV4cCI6MTYzNzkxMzgwM30.BTheGanFvMs0RyxvoqxZkFzgeUPjAaqOHB8K_5FJOfY",
+          "Content-Type": `application/json`
+        }
+      })
+      .then(function(response){
+        console.log(response)
+        navigation.navigate("모든 방 보기",{content:response.data, u_token : ut})
+        Alert.alert("필터가 적용되었습니다.")
+      })
+      .catch(function(error) {
+        if (error.response) {
+          // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
+          console.log(error.response.data);
+          console.log(error.response.status);
+          //console.log(error.response.headers);
+        }
+        else if (error.request) {
+          // 요청이 이루어 졌으나 응답을 받지 못했습니다.
+          // `error.request`는 브라우저의 XMLHttpRequest 인스턴스 또는
+          // Node.js의 http.ClientRequest 인스턴스입니다.
+          console.log(error.request);
+        }
+        else {
+          // 오류를 발생시킨 요청을 설정하는 중에 문제가 발생했습니다.
+          console.log('Error', error.message);
+        }
+        console.log(error.config);
+        //Alert.alert(JSON.stringify(error.response.status))
+      })
+  }
+
   const onPressHandler=i=>{
     let col = oCols.slice();
     let op = options.slice();
@@ -140,9 +218,50 @@ export default function FilterPage({navigation}) {
     setOptions(op)
   }
 
-  let form = {
-
+let form = {
+    type : {
+      roomType : room,
+      category : category,
+      rentType : rent, 
+    },
+    price : {
+      deposit : deposit,
+      monthly : monthly,
+    },
+    // information : {
+    //   area : area,
+    //   floor: floor,
+    //   construction : construction,
+    //   address: post+" "+address,
+    //   query: query,
+    //   description : description,
+    // },
+    rentPeriod:{
+      startDate : date1.toLocaleDateString(),
+      endDate : date2.toLocaleDateString(),
+    },
+    options:{
+      bed : options[0],
+      table : options[1],
+      refrigerator : options[2],
+      airconditioner : options[3],
+      chair : options[4],
+      closet : options[5],
+      washingmachine : options[6],
+      microwave : options[7],
+      wifi : options[8],
+      tv : options[9],
+      cctv : options[10],
+      parking : options[11],
+      elevator : options[12],
+      induction : options[13],
+    },
+    conditions:{
+      gender : gender,
+      smoking : smoking,
+    },
   }
+  
   
   return (
     <ScrollView style = {styles.container}>
@@ -357,38 +476,7 @@ export default function FilterPage({navigation}) {
           </TouchableOpacity>
         </View>
       </View>
-      <TouchableOpacity style = {styles.cButton} onPress={()=>
-      axios.post(`http://54.180.160.150:5000/api/v1/room/filter`,form,{
-        headers: {
-          Authorization : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJRCI6NjV9LCJpYXQiOjE2MzY3MDQyMDMsImV4cCI6MTYzNzkxMzgwM30.BTheGanFvMs0RyxvoqxZkFzgeUPjAaqOHB8K_5FJOfY",
-          "Content-Type": `application/json`
-        }
-      })
-      .then(function(response){
-        console.log(response)
-        navigation.navigate("모든 방 보기")
-        Alert.alert("필터가 적용되었습니다.")
-      })
-      .catch(function(error) {
-        if (error.response) {
-          // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
-          console.log(error.response.data);
-          console.log(error.response.status);
-          //console.log(error.response.headers);
-        }
-        else if (error.request) {
-          // 요청이 이루어 졌으나 응답을 받지 못했습니다.
-          // `error.request`는 브라우저의 XMLHttpRequest 인스턴스 또는
-          // Node.js의 http.ClientRequest 인스턴스입니다.
-          console.log(error.request);
-        }
-        else {
-          // 오류를 발생시킨 요청을 설정하는 중에 문제가 발생했습니다.
-          console.log('Error', error.message);
-        }
-        console.log(error.config);
-        //Alert.alert(JSON.stringify(error.response.status))
-      })
+      <TouchableOpacity style = {styles.cButton} onPress={()=>onConfirm
       }>
         <Text style = {styles.cText}>적용하기</Text>
       </TouchableOpacity>

@@ -126,7 +126,7 @@ export default function RoomPage({navigation, route}) {
                 <Text style={styles.subTitle}>방 정보</Text>
                 <View style={[styles.info,{borderTopWidth:1}]}>
                     <Text style={styles.infoComp}>주소</Text>
-                    <Text style={styles.infoData}>{room.data.information.address}</Text>
+                    <Text style={styles.infoData}>{room.data.information.query}</Text>
                 </View>
                 <View style={styles.info}>
                     <Text style={styles.infoComp}>전용 면적</Text>
@@ -180,15 +180,15 @@ export default function RoomPage({navigation, route}) {
                     <OptionUntouch content="책상" img={desk} set={option.desk}></OptionUntouch>
                 </View>
                 <View style = {styles.twoBtnContainer}>
-                    <OptionUntouch content="냉장고" img={fridge} set={option.fridge}></OptionUntouch>
-                    <OptionUntouch content="에어컨" img={airconditioner} set={option.aircon}></OptionUntouch>
+                    <OptionUntouch content="냉장고" img={fridge} set={option.refrigerator}></OptionUntouch>
+                    <OptionUntouch content="에어컨" img={airconditioner} set={option.airconditioner}></OptionUntouch>
                 </View>
                 <View style = {styles.twoBtnContainer}>
                     <OptionUntouch content="의자" img={chair} set={option.chair}></OptionUntouch>
                     <OptionUntouch content="옷장" img={closet}set={option.closet}></OptionUntouch>
                 </View>
                 <View style = {styles.twoBtnContainer}>
-                    <OptionUntouch content="세탁기" img={washer} set={option.washer}></OptionUntouch>
+                    <OptionUntouch content="세탁기" img={washer} set={option.washingmachine}></OptionUntouch>
                     <OptionUntouch content="전자레인지" img={microwave} set={option.microwave}></OptionUntouch>
                 </View>
                 <View style = {styles.twoBtnContainer}>
@@ -201,7 +201,7 @@ export default function RoomPage({navigation, route}) {
                 </View>
                 <View style = {styles.twoBtnContainer}>
                     <OptionUntouch content="엘리베이터" img={elevator} set={option.elevator}></OptionUntouch>
-                    <OptionUntouch content="가스레인지" img={stove} set={option.stove}></OptionUntouch>
+                    <OptionUntouch content="가스레인지" img={stove} set={option.induction}></OptionUntouch>
                 </View>
                 </View>
             </View>

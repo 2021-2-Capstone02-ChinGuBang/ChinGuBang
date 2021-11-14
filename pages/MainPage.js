@@ -18,6 +18,7 @@ export default function MainPage({navigation,route}) {
     console.log(route.params);
     console.log(route.params.u_token);
     setut(route.params.u_token)
+    console.log(ut)
   },[])
   const [colour1,setColours1]=useState("#C4C4C4")
   const onPressHandler1=color=>{
@@ -135,7 +136,7 @@ export default function MainPage({navigation,route}) {
       <TouchableOpacity style={[styles.condition,{position:'absolute',
         right:10,
         top:95,width:60,flexDirection:"row",backgroundColor:"#fff",borderWidth:2,borderRadius:5,borderColor:"#D84315"}]}
-        onPress={()=>{navigation.navigate('전체 필터')}}>
+        onPress={()=>{navigation.navigate('전체 필터'),{u_token:ut}}}>
           <Image source={filter} style={{alignSelf:"center"}}/>
           <Text style={styles.conditionText}>필터</Text>
         </TouchableOpacity>
@@ -162,14 +163,14 @@ export default function MainPage({navigation,route}) {
         }}>방 내놓기</Text>
       </TouchableOpacity>
       <TouchableOpacity style = {styles.cButton} onPress={()=>
-        axios.get(`http://54.180.160.150:5000/api/v1/room?offset=0&limit=5`,{
+        axios.get(`http://54.180.160.150:5000/api/v1/room`,{
           headers: {
             Authorization : ut
           }
         })
         .then((response)=>{
           //console.log(response.data);
-          navigation.navigate("모든 방 보기",{content:response.data, u_token : response.data.token})
+          navigation.navigate("모든 방 보기",{content:response.data, u_token : ut})
         })
         .catch((error)=>{
           if (error.response) {

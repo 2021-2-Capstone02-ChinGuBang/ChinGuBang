@@ -16,6 +16,7 @@ useEffect(()=>{
   console.log(route.params);
   console.log(route.params.u_token);
   setut(route.params.u_token)
+  console.log(ut)
 },[])
 
 
@@ -30,7 +31,7 @@ console.log(route.params.content)
             {/* 하나의 카드 영역을 나타내는 View */}
             {
             room.map((content,i)=>{
-                return (<RoomCard content={content} key={i} navigation={navigation} ut={ut} />)
+                return (<RoomCard content={content} key={i} navigation={navigation} ut={route.params.u_token} />)
             })
             }
           </View>
