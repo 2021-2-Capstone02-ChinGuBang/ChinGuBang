@@ -46,7 +46,8 @@ export default function PutOutRoom({navigation, route}) {
     console.log(route.params.u_token);
     setut(route.params.u_token)
   },[])
-
+  
+  let form = new FormData();
 
   const [base1,setBase1] = useState("")
   const [base2,setBase2] = useState("")
@@ -118,6 +119,7 @@ export default function PutOutRoom({navigation, route}) {
   let colour = ["#C4C4C4","#D84315"]
   const [show, setShow] = useState(false);
   const [cond, setCond] = useState(false)
+  const [dateCond, setDateCond] = useState(false)
 
   let kind = ["원룸", "투룸 이상", "오피스텔", "아파트"]
   let method = ["단기임대","양도"]
@@ -180,12 +182,21 @@ export default function PutOutRoom({navigation, route}) {
     col[i] = 1
     setMcol(col)
     setCategory(method[i])
+    // 양도 선택시 성별, 흡연여부 고정
+    // 교수님 피드백 반영으로 고정 해제
+    // if(i==1){
+    //   setCond(true);
+    //   sexColor(2)
+    //   cigarColor(1)
+    // }else{
+    //   setCond(false);
+    // }
     if(i==1){
-      setCond(true);
-      sexColor(2)
-      cigarColor(1)
-    }else{
-      setCond(false);
+      setDateCond(true)
+      Alert.alert("양도 선택 시 원 임차인(집주인)과의 계약을 상정하므로 마감(?) 날짜 선택이 비활성화 됩니다.")
+    }
+    else{
+      setDateCond(false)
     }
   }
   const typeColor = (i) =>{
@@ -212,7 +223,7 @@ export default function PutOutRoom({navigation, route}) {
     }
   }
 
-  let form = {
+  let data = {
     type : {
       roomType : room,
       category : category,
@@ -255,11 +266,16 @@ export default function PutOutRoom({navigation, route}) {
       smoking : smoking,
     },
     photo:{
-      main: base1,
-      restroom: base2,
-      kitchen: base3,
-      photo1: base4,
-      photo2: base5
+      main: img1,
+      restroom: img2,
+      kitchen: img3,
+      photo1: img4,
+      photo2: img5
+      // main: base1,
+      // restroom: base2,
+      // kitchen: base3,
+      // photo1: base4,
+      // photo2: base5
       // main : base64.encode(img1),
       // restroom : base64.encode(img2),
       // kitchen : base64.encode(img3),
@@ -272,6 +288,47 @@ export default function PutOutRoom({navigation, route}) {
       // photo2 : img5.base64,
     }
   }
+  let file = {
+    uri:img1,
+    type: 'multipart/form-data',
+    name: 'main.jpg'
+  }
+  form.append('type[roomType]',room)
+  form.append('type[category]',category)
+  form.append('price[deposit]',deposit)
+  form.append('price[monthly]',monthly)
+  form.append('price[control]',control)
+  form.append('information[area]',area)
+  form.append('information[floor]',floor)
+  form.append('information[construction]',construction)
+  form.append('information[post]',post)
+  form.append('information[address]',address)
+  form.append('information[description]',description)
+  form.append('rentPeriod[startDate]',date1)
+  form.append('rentPeriod[endDate]',date2)
+  form.append('options[bed]',options[0])
+  form.append('options[table]',options[1])
+  form.append('options[refrigerator]',options[2])
+  form.append('options[airconditioner]',options[3])
+  form.append('options[chair]',options[4])
+  form.append('options[closet]',options[5])
+  form.append('options[washingmachine]',options[6])
+  form.append('options[microwave]',options[7])
+  form.append('options[wifi]',options[8])
+  form.append('options[tv]',options[9])
+  form.append('options[cctv]',options[10])
+  form.append('options[parking]',options[11])
+  form.append('options[elevator]',options[12])
+  form.append('options[induction]',options[13])
+  form.append('conditions[gender]',gender)
+  form.append('conditions[smoking]',smoking)
+  form.append('main',base1)
+  form.append('restroom',base2)
+  form.append('kitchen',base3)
+  form.append('photo1',base4)
+  form.append('photo2',base5)
+ 
+
 
   return (
     <ScrollView style = {styles.container}>
@@ -344,7 +401,7 @@ export default function PutOutRoom({navigation, route}) {
               mode='date'
               display="default"
               onChange={onChange2}
-              disabled={cond}
+              disabled={dateCond}
           />
         </View>
       </View>
@@ -602,10 +659,10 @@ export default function PutOutRoom({navigation, route}) {
         </TouchableOpacity>
       </View>
       <TouchableOpacity style = {styles.cButton} onPress={()=>
-      axios.post(`http://54.180.160.150:5000/api/v1/room`,JSON.stringify(form),{
+      axios.post(`http://54.180.160.150:5000/api/v1/room`,form,{
         headers: {
-          Authorization : ut,
-          "content-type" : "application/json"
+          Authorization : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJRCI6NjV9LCJpYXQiOjE2MzY3MDQyMDMsImV4cCI6MTYzNzkxMzgwM30.BTheGanFvMs0RyxvoqxZkFzgeUPjAaqOHB8K_5FJOfY",
+          "content-type" : "multipart/form-data"
         }
       })
       .then(function(response){

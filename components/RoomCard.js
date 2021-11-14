@@ -12,8 +12,9 @@ export default function RoomCard({content,navigation,ut}) {
     const [kind,setKind]=useState("월세")
     const [pick,setPick]=useState(0)
     const [date,setDate]=useState("")
+    const [u_t,setUt] = useState(ut)
     console.log(ut)
-    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJRCI6NTZ9LCJpYXQiOjE2MzY2OTIzNzcsImV4cCI6MTYzNzkwMTk3N30.Cy1YFpkTgK4_yOpaX0EBHenUqsiWB7qaaIRTvrsTj9k"
+    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJRCI6NjV9LCJpYXQiOjE2MzY2OTg2NzAsImV4cCI6MTYzNzkwODI3MH0.w4x-WWrYoc7H1bATmTfZSnEnno9HDRNTrbiEKRv4fq8"
     let main = content.photo.main
     useEffect(()=>{
       if(content.likes.length==0){
@@ -39,7 +40,7 @@ export default function RoomCard({content,navigation,ut}) {
         <TouchableOpacity onPress={()=>{
           axios.get(`http://54.180.160.150:5000/api/v1/room/`+content.roomID,{
             headers:{
-                Authorization:token,
+                Authorization:u_t,
             }
         })
         .then((response)=>{
@@ -72,7 +73,8 @@ export default function RoomCard({content,navigation,ut}) {
         <View style={styles.card}>
             <View style={styles.c1}>
                 <Image resizeMode={"cover"}
-                style={styles.roomImage} source={`data:image/png;base64,${main}`}/>
+                style={styles.roomImage} source={{uri:main}}/>
+                {/* `data:image/png;base64,${main}` */}
             </View>
 
             <View style={styles.c2}>

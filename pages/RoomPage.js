@@ -31,11 +31,16 @@ export default function RoomPage({navigation, route}) {
     const [room, setRoom] = useState(route.params.content)
     const [option,setOption] = useState(room.data.options)
     let photo = [
-        base64.decode(room.data.photo.main), 
-        base64.decode(room.data.photo.restroom), 
-        base64.decode(room.data.photo.kitchen), 
-        base64.decode(room.data.photo.photo1), 
-        base64.decode(room.data.photo.photo2)
+        `data:image/jpg;base64,${room.data.photo.main}`,
+        `data:image/jpg;base64,${room.data.photo.restroom}`,
+        `data:image/jpg;base64,${room.data.photo.kitchen}`,
+        `data:image/jpg;base64,${room.data.photo.photo1}`,
+        `data:image/jpg;base64,${room.data.photo.photo2}`,
+        // base64.decode(room.data.photo.main), 
+        // base64.decode(room.data.photo.restroom), 
+        // base64.decode(room.data.photo.kitchen), 
+        // base64.decode(room.data.photo.photo1), 
+        // base64.decode(room.data.photo.photo2)
         // room.data.photo.main,
         // room.data.photo.restroom,
         // room.data.photo.kitchen,
@@ -46,7 +51,7 @@ export default function RoomPage({navigation, route}) {
         //Loop to make image array to show in slider
         return {
           source: {
-            uri: photo[i],
+            uri: photo[i]
           },
         };
       });
@@ -234,7 +239,12 @@ export default function RoomPage({navigation, route}) {
                     <Image source={roomImage} style={styles.mainImage}></Image>
                 </TouchableOpacity>
             </View>
-            <Confirm content={"쪽지 보내기"} naviPage={"쪽지 보내기"} navigation={navigation} alert={0}></Confirm>
+            <TouchableOpacity style = {styles.cButton} onPress={()=>
+            {
+                navigation.navigate("MainPage")
+            }}>
+                <Text style = {styles.cText}>쪽지 보내기</Text>
+            </TouchableOpacity>        
         </ScrollView>
     );
 }
@@ -318,6 +328,18 @@ const styles = StyleSheet.create({
         height: 350,
         marginTop:20,
         marginBottom:20,
+    },
+    cButton : {
+        width:"100%",
+        height:72.5,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor:"#D84315"
+    },
+        cText : {
+        color:"#FFF",
+        fontWeight:"700",
+        fontSize:20,
     },
 
 })
