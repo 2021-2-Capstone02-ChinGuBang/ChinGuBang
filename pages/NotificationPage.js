@@ -4,18 +4,26 @@ import { StyleSheet, Text, View, Image, TouchableOpacity,TextInput, ScrollView }
 import search from "../iconimage/search.png"
 import notidata from "../noti.json"
 import NotiCard from '../components/NotiCard';
+import { useIsFocused } from '@react-navigation/native';
+import axios from "axios"
 
 export default function NotificationPage({navigation,route}) {
 console.disableYellowBox = true;
-//const [state, setState] = useState([])
+const [noti, setNoti] = useState([])
+//유저 토큰
+const [ut,setut]=useState("")
 
-//useEffect(()=>{
-   // setState(notidata)
-//},[])
+//컨텐츠 새로고침,데이터 갱신
+const isFocused = useIsFocused()
 
+useEffect(()=>{
+  if (isFocused) { 
+    console.log("Focused")
+    setNoti(route.params.content.data.data.messages)}
+    console.log(route.params.u_token)
+    setut(route.params.u_token)
+  },[isFocused,noti])
 
-//서버에서 정보 받아와야 함
-let noti = notidata.data;
 
   return (
     <View style={styles.container}>
@@ -24,7 +32,7 @@ let noti = notidata.data;
             {/* 하나의 카드 영역을 나타내는 View */}
             {
             noti.map((content,i)=>{
-                return (<NotiCard content={content} key={i} navigation={navigation}/>)
+                return (<NotiCard content={content} key={i} navigation={navigation} ut={ut}/>)
             })
             }
           </View>
@@ -37,11 +45,12 @@ let noti = notidata.data;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#f8f8f8',
     },
     cardC: {
-        marginTop:10,
-        marginLeft:10
+        //borderRadius:10,
+        padding:3,
+       // backgroundColor: '#fff',
       }
     
     

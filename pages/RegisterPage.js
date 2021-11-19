@@ -6,30 +6,15 @@ import axios from "axios"
 
 export default function RegisterPage({navigation,route}) {
 
-  function isPassword(asValue) {
-    var regExp = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
-    console.log(regExp.test(asValue));
-    if(regExp.test(asValue)== true){
-      setreg(true);
-    return alert("비밀번호 OK!"); // 형식에 맞는 경우 true 리턴
-    }
-    else if(regExp.test(asValue)== false){
-      setreg(false);
-    return alert("비밀번호 형식이 틀립니다!");
-    }
-  }
-
-
 
   const [reg, setreg] = useState(false);
 
   const [value2, onChangeText2] = React.useState('');
   const [value3, onChangeText3] = React.useState('');
  
- 
   useEffect(()=>{
     console.log(route.params);
-  }
+     }
    
    
 , [])

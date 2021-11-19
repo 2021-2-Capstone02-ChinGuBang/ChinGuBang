@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from "react"
-import {View,Text,Image,StyleSheet,TouchableOpacity} from "react-native";
+import {View,Text,Image,StyleSheet,TouchableOpacity,Alert} from "react-native";
 import axios from 'axios';
 import base64 from 'base-64'
 
@@ -14,6 +14,7 @@ export default function RoomCard({content,navigation,ut}) {
     const [date,setDate]=useState("")
     const [u_t,setUt] = useState("")
     const [like,setLike] = useState(content.isLike)
+    const [ID,setID]=useState(content.roomID)
     let main = content.photo.main
     useEffect(()=>{
       console.log("#############################################")
@@ -105,7 +106,23 @@ export default function RoomCard({content,navigation,ut}) {
                 <View style={styles.c3}>
                     <View style={styles.kind}><Text style={styles.kindtext}>{content.type.roomType}</Text></View>
                     <View style={styles.method}><Text style={styles.methodtext}>{content.type.category}</Text></View>
-                    <TouchableOpacity style={{width:35,height:35}} onPress={()=>setLike(true)}>
+                    <TouchableOpacity style={{width:35,height:35}} onPress={()=>{like ? setLike(false) : setLike(true);
+                                                                    Alert.alert("머여");
+                                                                axios.post(`http://54.180.160.150:5000/api/v1/room/like/`+ID,null,{
+                                                                  headers:{
+                                                                      Authorization:u_t,
+                                                                  }
+                                                                }).then(function(res){
+                                                                  Alert.alert(res.message)
+                                                                  console.log(res)
+                                                                  console.log(u_t)
+                                                                })
+                                                                .catch(function(res){
+                                                                  console.log(ID)
+                                                                  Alert.alert(res.message)
+                                                                  console.log(res)
+                                                                  console.log("u_t:",u_t)
+                                                                })}}>
                       <View style={styles.heartImage}>
                             <Ionicons
                               name={like ? "ios-heart" : "ios-heart-outline"}
