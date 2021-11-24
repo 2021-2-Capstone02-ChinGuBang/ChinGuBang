@@ -33,8 +33,8 @@ export default function FilterPage({navigation,route}) {
   const [tcol, setTcol] = useState([0,0])
   const [scol, setScol] = useState([0,0,0])
   const [ccol, setCcol] = useState([0,0])
-  const [deposit, setDeposit] = useState(0)
-  const [monthly, setMonthly] = useState(0)
+  const [deposit, setDeposit] = useState(10000000)
+  const [monthly, setMonthly] = useState(10000000)
   const [dateCond, setDateCond] = useState(false)
   const [cond, setCond] = useState(false)
 
@@ -68,6 +68,7 @@ export default function FilterPage({navigation,route}) {
       col[i]=0
     }
     setKcol(col)
+    setRoom(addConds(col,kind))
   }
   const methodColor = (i) =>{
     let col = mcol.slice()
@@ -78,6 +79,8 @@ export default function FilterPage({navigation,route}) {
       col[i]=0
     }
     setMcol(col)
+    setCategory(addConds(col,method))
+
     // if(i==1){
     //   setDateCond(true)
     //   Alert.alert("양도 선택 시 원 임차인(집주인)과의 계약을 상정하므로 마감(?) 날짜 선택이 비활성화 됩니다.")
@@ -95,6 +98,7 @@ export default function FilterPage({navigation,route}) {
       col[i]=0
     }
     setTcol(col)
+    setRent(addConds(col,type))
   }
   const onChange1 = (event, selectedDate) => {
     const currentDate = selectedDate || date1;
@@ -115,6 +119,8 @@ export default function FilterPage({navigation,route}) {
       col[i]=0
     }
     setScol(col)
+    setGender(addConds(col,sex))
+
   }
   const cigarColor = (i) =>{
     let col = ccol.slice()
@@ -125,6 +131,8 @@ export default function FilterPage({navigation,route}) {
       col[i]=0
     }
     setCcol(col)
+    setSmoking(addConds(col,cigar))
+
   }
 
   const [oCols,setOCols]=useState([0,0,0,0,0,0,0,0,0,0,0,0,0,0])
@@ -158,46 +166,46 @@ export default function FilterPage({navigation,route}) {
   }
 
 
-  const onConfirm=()=>{
-    console.log("적용 좀 해봐라")
-    setRoom(addConds(kcol,kind))
-    setCategory(addConds(mcol,method))
-    setRent(addConds(tcol,type))
-    setGender(addConds(scol,sex))
-    setSmoking(addConds(ccol,cigar))
+  // const onConfirm=()=>{
+  //   console.log("적용 좀 해봐라")
+  //   setRoom(addConds(kcol,kind))
+  //   setCategory(addConds(mcol,method))
+  //   setRent(addConds(tcol,type))
+  //   setGender(addConds(scol,sex))
+  //   setSmoking(addConds(ccol,cigar))
 
-    axios.post(`http://54.180.160.150:5000/api/v1/room/filter`,form,{
-        headers: {
-          Authorization : ut,
-          "Content-Type": `application/json`
-        }
-      })
-      .then(function(response){
-        console.log(response)
-        navigation.navigate("모든 방 보기",{content:response.data, u_token : ut})
-        Alert.alert("필터가 적용되었습니다.")
-      })
-      .catch(function(error) {
-        if (error.response) {
-          // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
-          console.log(error.response.data);
-          console.log(error.response.status);
-          //console.log(error.response.headers);
-        }
-        else if (error.request) {
-          // 요청이 이루어 졌으나 응답을 받지 못했습니다.
-          // `error.request`는 브라우저의 XMLHttpRequest 인스턴스 또는
-          // Node.js의 http.ClientRequest 인스턴스입니다.
-          console.log(error.request);
-        }
-        else {
-          // 오류를 발생시킨 요청을 설정하는 중에 문제가 발생했습니다.
-          console.log('Error', error.message);
-        }
-        console.log(error.config);
-        //Alert.alert(JSON.stringify(error.response.status))
-      })
-  }
+  //   axios.post(`http://54.180.160.150:5000/api/v1/room/filter`,form,{
+  //       headers: {
+  //         Authorization : ut,
+  //         "Content-Type": `application/json`
+  //       }
+  //     })
+  //     .then(function(response){
+  //       console.log(response)
+  //       navigation.navigate("모든 방 보기",{content:response.data, u_token : ut})
+  //       Alert.alert("필터가 적용되었습니다.")
+  //     })
+  //     .catch(function(error) {
+  //       if (error.response) {
+  //         // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
+  //         console.log(error.response.data);
+  //         console.log(error.response.status);
+  //         //console.log(error.response.headers);
+  //       }
+  //       else if (error.request) {
+  //         // 요청이 이루어 졌으나 응답을 받지 못했습니다.
+  //         // `error.request`는 브라우저의 XMLHttpRequest 인스턴스 또는
+  //         // Node.js의 http.ClientRequest 인스턴스입니다.
+  //         console.log(error.request);
+  //       }
+  //       else {
+  //         // 오류를 발생시킨 요청을 설정하는 중에 문제가 발생했습니다.
+  //         console.log('Error', error.message);
+  //       }
+  //       console.log(error.config);
+  //       //Alert.alert(JSON.stringify(error.response.status))
+  //     })
+  // }
 
   const onPressHandler=i=>{
     let col = oCols.slice();
@@ -226,14 +234,6 @@ let form = {
       deposit : deposit,
       monthly : monthly,
     },
-    // information : {
-    //   area : area,
-    //   floor: floor,
-    //   construction : construction,
-    //   address: post+" "+address,
-    //   query: query,
-    //   description : description,
-    // },
     rentPeriod:{
       startDate : date1,
       endDate : date2,
@@ -476,11 +476,11 @@ let form = {
       </View>
       <TouchableOpacity style = {styles.cButton} onPress={()=>{
     console.log("적용 좀 해봐라")
-    setRoom(addConds(kcol,kind))
-    setCategory(addConds(mcol,method))
-    setRent(addConds(tcol,type))
-    setGender(addConds(scol,sex))
-    setSmoking(addConds(ccol,cigar))
+    // setRoom(addConds(kcol,kind))
+    // setCategory(addConds(mcol,method))
+    // setRent(addConds(tcol,type))
+    // setGender(addConds(scol,sex))
+    // setSmoking(addConds(ccol,cigar))
 
     axios.post(`http://54.180.160.150:5000/api/v1/room/filter`,form,{
         headers: {
@@ -489,8 +489,10 @@ let form = {
         }
       })
       .then(function(response){
-        console.log(response)
-        navigation.navigate("모든 방 보기",{content:response.data, u_token : ut})
+        console.log(form)
+        //console.log(response)
+        console.log("##################################")
+        navigation.navigate("MainPage",{rooms: response.data.data.rooms, newMsg: response.data.data.newMessageNum, u_token : ut})
         Alert.alert("필터가 적용되었습니다.")
       })
       .catch(function(error) {

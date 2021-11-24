@@ -722,7 +722,15 @@ export default function PutOutRoom({navigation, route}) {
       })
       .then(function(response){
         console.log(response)
-        navigation.navigate("MainPage")
+        axios.get(`http://54.180.160.150:5000/api/v1/main`,{
+          headers:{
+            Authorization : ut
+          }
+        })
+        .then(function(res){
+          console.log(res)
+          navigation.navigate('MainPage',{u_token : ut, rooms: res.data.data.rooms, newMsg: res.data.data.newMessageNum})
+        })
         Alert.alert("방이 정상적으로 등록되었습니다.")
         console.log("ut 왜 아안 돼?: ",ut)
       })

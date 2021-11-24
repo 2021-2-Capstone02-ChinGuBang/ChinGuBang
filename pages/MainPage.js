@@ -1,8 +1,8 @@
 import React,{useState,useEffect} from 'react';
 import MapView, { Circle, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions, Image, TouchableOpacity } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 
-import Confirm from '../components/Confirm'
 import Home from '../assets/CapstoneHome.png'
 import filter from '../assets/filter.png'
 import homeplus from '../assets/homeplus.png'
@@ -17,21 +17,17 @@ export default function MainPage({navigation,route}) {
 
   const [ut,setut]=useState("")
   let pinCol=["#C4C4C4","#D84315"]
-  useEffect(()=>{
+  const isFocused = useIsFocused()
 
+  useEffect(()=>{
+    if(isFocused){
     setut(route.params.u_token)
     setRoom(route.params.rooms)
     setReady(false)
-    // findCoords(route.params.rooms)
-    //   .then((resolve)=>{
-    //     console.log("안되는건가")
-    //     setCoords(resolve)
-    //     console.log(resolve)
-    //     console.log("coords:",coords)
-    //     if(coords[0]!==undefined)
-    //       setReady(false);
-    //   })
-  },[])
+    
+    console.log(rooms)
+    }
+  },[isFocused])
   const [colour1,setColours1]=useState("#C4C4C4")
   const onPressHandler1=color=>{
     if (color==="#D84315"){
@@ -52,15 +48,7 @@ export default function MainPage({navigation,route}) {
   }
   const [rooms,setRoom]=useState([])
   const [ready,setReady] = useState(true)
-  const [coords,setCoords] = useState([])
-  function findCoords(rooms){
-    const result = Promise.all(
-      rooms.map((room)=>{
-        return axios.get('https://maps.google.com/maps/api/geocode/json?address=' + room.information.post + '&key=' + mApiKey + '&language=ko')
-        .then(res=>res.data)})
-    );
-    return result;
-  }
+  const [mark, setMark] = useState([])
 
   return ready ? <Loading/> : (
     <View style={styles.container}>
@@ -92,10 +80,10 @@ export default function MainPage({navigation,route}) {
         })
         .then((response)=>{
           //console.log(response);
+          setReady(true)
           navigation.navigate("알림",{content:response, u_token : ut})
         })
         .catch((error)=>{
-         
           console.log("Error");
           //Alert.alert(JSON.stringify(error.response.status))
         })
@@ -113,7 +101,37 @@ export default function MainPage({navigation,route}) {
           marginRight:25,
           width:25,
           height:25,
-        }} onPress={()=>{navigation.navigate('MY')}}> 
+        }} onPress={()=>axios.get('http://54.180.160.150:5000/api/v1/user',{
+          headers: {
+            Authorization : ut
+          }
+        })
+        .then((response)=>{
+          console.log(response);
+          navigation.navigate('MY',{content:response, u_token : ut})
+        })
+        .catch((error)=>{
+          if (error.response) {
+            // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
+            //console.log(error.response.data);
+            //console.log(error.response.status);
+            //console.log(error.response.headers);
+          }
+          else if (error.request) {
+            // 요청이 이루어 졌으나 응답을 받지 못했습니다.
+            // `error.request`는 브라우저의 XMLHttpRequest 인스턴스 또는
+            // Node.js의 http.ClientRequest 인스턴스입니다.
+            console.log(error.request);
+          }
+          else {
+            // 오류를 발생시킨 요청을 설정하는 중에 문제가 발생했습니다.
+            //console.log('Error', error.message);
+          }
+          //console.log(error.config);
+          console.log("ErrorErrorgggErrorError");
+          //Alert.alert(JSON.stringify(error.response.status))
+        })
+        }> 
         <Image source={profile}/>
         </TouchableOpacity>
       </View>
@@ -130,41 +148,41 @@ export default function MainPage({navigation,route}) {
             return(
             <Marker
               coordinate={{latitude: parseFloat(content.information.lat), longitude: parseFloat(content.information.lng)}}
-              title="2021-11-04 ~"
-              description="2022-01-05"
-              //pinColor={pinCol[i%2]}
-              onPress={()=>
-                axios.get(`http://54.180.160.150:5000/api/v1/room`,{
-                  headers: {
-                    Authorization : ut
+              title={content.rentPeriod.startDate}
+              description={content.type.category=="양도" ? "~" : content.rentPeriod.endDate}
+              pinColor={content.type.category=="양도" ? colour2 : colour1}
+              onPress={()=>{
+                axios.get(`http://54.180.160.150:5000/api/v1/room/`+content.roomID,{
+                  headers:{
+                      Authorization:ut,
                   }
-                })
-                .then((response)=>{
-                  //console.log(response.data);
-                  navigation.navigate("모든 방 보기",{content:response.data, u_token : ut})
-                })
-                .catch((error)=>{
-                  if (error.response) {
-                    // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
-                    //console.log(error.response.data);
-                    //console.log(error.response.status);
-                    //console.log(error.response.headers);
-                  }
-                  else if (error.request) {
-                    // 요청이 이루어 졌으나 응답을 받지 못했습니다.
-                    // `error.request`는 브라우저의 XMLHttpRequest 인스턴스 또는
-                    // Node.js의 http.ClientRequest 인스턴스입니다.
-                    console.log(error.request);
-                  }
-                  else {
-                    // 오류를 발생시킨 요청을 설정하는 중에 문제가 발생했습니다.
-                    //console.log('Error', error.message);
-                  }
-                  //console.log(error.config);
-                  console.log("ErrorErrorgggErrorError");
-                  //Alert.alert(JSON.stringify(error.response.status))
-                })
+              })
+              .then((response)=>{
+                  console.log(response.data);
+                  console.log("이거 맞나")
+                  navigation.navigate('방 보기',{content: response.data, u_t:ut})
+              })
+              .catch((error)=>{
+                if (error.response) {
+                  // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
+                  console.log(error.response.data);
+                  console.log(error.response.status);
+                  //console.log(error.response.headers);
                 }
+                else if (error.request) {
+                  // 요청이 이루어 졌으나 응답을 받지 못했습니다.
+                  // `error.request`는 브라우저의 XMLHttpRequest 인스턴스 또는
+                  // Node.js의 http.ClientRequest 인스턴스입니다.
+                  console.log(error.request);
+                }
+                else {
+                  // 오류를 발생시킨 요청을 설정하는 중에 문제가 발생했습니다.
+                  console.log('Error', error.message);
+                }
+                console.log(error.config);
+                //Alert.alert(JSON.stringify(error.response.status))
+              })
+              }}
             />
             )
           })

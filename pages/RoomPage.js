@@ -28,9 +28,9 @@ import roomImage from "../assets/roomImage.png"
 import axios from 'axios';
 
 export default function RoomPage({navigation, route}) {
-    let mApiKey = 'AIzaSyA-TBtTOWILp1wUABnai9adbbJMgcPP008'
-    const[long,setLong] = useState(route.params.location.lng)
-    const[lat,setLat] = useState(route.params.location.lat)
+    // let mApiKey = 'AIzaSyA-TBtTOWILp1wUABnai9adbbJMgcPP008'
+    // const[long,setLong] = useState(route.params.location.lng)
+    // const[lat,setLat] = useState(route.params.location.lat)
     const[ut,setUt]=useState('')
     useEffect(()=>{
         setUt(route.params.u_t)
@@ -252,8 +252,8 @@ export default function RoomPage({navigation, route}) {
                 <MapView style={styles.map} 
                     provider={PROVIDER_GOOGLE} 
                     initialRegion={{
-                        latitude: lat, 
-                        longitude: long,
+                        latitude: parseFloat(room.data.information.lat), 
+                        longitude: parseFloat(room.data.information.lng),
                         latitudeDelta: 0.0025,
                         longitudeDelta: 0.002,
                 }}
@@ -261,13 +261,13 @@ export default function RoomPage({navigation, route}) {
                 zoomEnabled={false}>
                     <Circle 
                         center={{
-                            latitude: lat, 
-                            longitude: long,
+                            latitude: parseFloat(room.data.information.lat), 
+                            longitude: parseFloat(room.data.information.lng),
                         }}
                         radius = {50}
                         strokeColor = "#D84315"
                         strokeWidth = {5}
-                        // fillColor = "#D84315">
+                        fillColor = "#D84315"
                         >
                     </Circle>
                 </MapView>
