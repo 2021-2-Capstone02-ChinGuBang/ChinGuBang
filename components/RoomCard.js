@@ -8,7 +8,7 @@ import heart from "../iconimage/heart.png"
 import {Ionicons} from "@expo/vector-icons";
 import { unstable_batchedUpdates } from "react-dom";
 //비구조 할당 방식으로 넘긴 속성 데이터를 꺼내 사용함
-export default function RoomCard({content,navigation,ut}) {
+export default function RoomCard({content,navigation,ut,auth}) {
   let mApiKey = 'AIzaSyA-TBtTOWILp1wUABnai9adbbJMgcPP008'
     const [kind,setKind]=useState("월세")
     const [date,setDate]=useState("")
@@ -46,7 +46,7 @@ export default function RoomCard({content,navigation,ut}) {
         .then((response)=>{
             console.log(response.data);
             console.log("이거 맞나")
-            navigation.navigate('방 보기',{content: response.data, u_t:u_t})
+            navigation.navigate('방 보기',{content: response.data, u_t:u_t, auth:auth})
 
             // axios.get('https://maps.google.com/maps/api/geocode/json?address=' + response.data.data.information.post + '&key=' + mApiKey + '&language=ko')
             // .then(function(res){
