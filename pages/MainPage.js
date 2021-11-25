@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import MapView, { Circle, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-import { StyleSheet, Text, View, Dimensions, Image, TouchableOpacity,Modal,Pressable } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Image, TouchableOpacity,Modal,Pressable, Alert } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 
 import Home from '../assets/CapstoneHome.png'
@@ -82,8 +82,10 @@ export default function MainPage({navigation,route}) {
           height:25,
           flexDirection:"row"
         }} 
-        disabled={touchable}
-        onPress={()=>axios.get('http://54.180.160.150:5000/api/v1/message',{
+        //disabled={touchable}
+        onPress={()=>
+          touchable ? Alert.alert("대학생 등록을 해주세요!") : 
+          axios.get('http://54.180.160.150:5000/api/v1/message',{
           headers:{
               Authorization : ut
           }
@@ -112,8 +114,10 @@ export default function MainPage({navigation,route}) {
           width:25,
           height:25,
         }} 
-        disabled={touchable}
-        onPress={()=>axios.get('http://54.180.160.150:5000/api/v1/user',{
+        // disabled={touchable}
+        onPress={()=>
+          touchable ? Alert.alert("대학생 등록을 해주세요!") : 
+          axios.get('http://54.180.160.150:5000/api/v1/user',{
           headers: {
             Authorization : ut
           }
@@ -294,8 +298,10 @@ export default function MainPage({navigation,route}) {
         bottom:80,
         flexDirection:"row"
       }]}
-      disabled={touchable}
-      onPress={()=>{navigation.navigate('방 내놓기', {u_token : ut})}}>
+      // disabled={touchable}
+      onPress={()=>{
+        touchable ? Alert.alert("대학생 등록을 해주세요!") : 
+        navigation.navigate('방 내놓기', {u_token : ut})}}>
         <Image source={homeplus} style={{
           flex:2,
           alignSelf:"center",

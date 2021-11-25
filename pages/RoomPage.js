@@ -247,10 +247,11 @@ export default function RoomPage({navigation, route}) {
                 </TouchableOpacity>
             </View>
             <TouchableOpacity style = {styles.cButton} 
-            disabled={touch}
+            // disabled={touch}
             onPress={()=>
             {   
-                console.log("ut 확인용",ut)
+                touch ? Alert.alert("대학생 등록을 해주세요!") : 
+                //console.log("ut 확인용",ut)
                 navigation.navigate("쪽지 보내기",{user_id:ut, roomID:room.data.roomID, rcID:room.data.user.userID})
             }}>
                 <Text style = {styles.cText}>쪽지 보내기</Text>

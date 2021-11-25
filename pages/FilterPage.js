@@ -498,6 +498,7 @@ let form = {
           Alert.alert("필터가 적용되었습니다.")
         }
         else{
+          console.log(response.data)
           Alert.alert("해당되는 방이 없습니다. 다시 필터링해주세요.")
         }
       })
