@@ -250,7 +250,7 @@ export default function RoomPage({navigation, route}) {
             onPress={()=>
             {   
                 console.log("ut 확인용",ut)
-                navigation.navigate("쪽지 보내기",{user_id:ut, roomID:room.data.roomID})
+                navigation.navigate("쪽지 보내기",{user_id:ut, roomID:room.data.roomID, rcID:room.data.user.userID})
             }}>
                 <Text style = {styles.cText}>쪽지 보내기</Text>
             </TouchableOpacity>        
