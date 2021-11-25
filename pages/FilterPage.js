@@ -104,6 +104,7 @@ export default function FilterPage({navigation,route}) {
     const currentDate = selectedDate || date1;
     setShow(Platform.OS === 'ios');
     setDate1(currentDate);
+    setDate2(currentDate)
   };
   const onChange2 = (event, selectedDate) => {
     const currentDate = selectedDate || date2;
@@ -491,9 +492,14 @@ let form = {
       .then(function(response){
         console.log(form)
         //console.log(response)
-        console.log("##################################")
-        navigation.navigate("MainPage",{rooms: response.data.data.rooms, newMsg: response.data.data.newMessageNum, u_token : ut})
-        Alert.alert("필터가 적용되었습니다.")
+        console.log("##############필터####################")
+        if(response.data.data.rooms.length!=0){
+          navigation.navigate("MainPage",{rooms: response.data.data.rooms, newMsg: response.data.data.newMessageNum, u_token : ut})
+          Alert.alert("필터가 적용되었습니다.")
+        }
+        else{
+          Alert.alert("해당되는 방이 없습니다. 다시 필터링해주세요.")
+        }
       })
       .catch(function(error) {
         if (error.response) {

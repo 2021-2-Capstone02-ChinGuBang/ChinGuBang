@@ -18,7 +18,7 @@ export default function MainPage({navigation,route}) {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalRoom,setModalRoom]=useState(0);
   const [ut,setut]=useState("")
-  let pinCol=["#C4C4C4","#D84315"]
+  let pinCol=["#D84315","#C4C4C4"]
   const isFocused = useIsFocused()
   const [touchable, setTouchable] = useState(false)
   const [newMsg, setNewMsg] = useState(route.params.newMsg)
@@ -35,7 +35,8 @@ export default function MainPage({navigation,route}) {
     console.log(rooms)
     }
   },[isFocused])
-  const [colour1,setColours1]=useState("#C4C4C4")
+  const [touch1, setTouch1] = useState(false)
+  const [colour1,setColours1]=useState("#D84315")
   const onPressHandler1=color=>{
     if (color==="#D84315"){
       setColours1("#C4C4C4")
@@ -44,7 +45,7 @@ export default function MainPage({navigation,route}) {
       setColours1("#D84315")
     }
   }
-  const [colour2,setColours2]=useState("#C4C4C4")
+  const [colour2,setColours2]=useState("#D84315")
   const onPressHandler2=color=>{
     if (color==="#D84315"){
       setColours2("#C4C4C4")

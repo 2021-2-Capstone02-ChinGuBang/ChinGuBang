@@ -138,7 +138,8 @@ export default function RoomPage({navigation, route}) {
                 </View>
                 <View style={styles.info}>
                     <Text style={styles.infoComp}>임대 기간</Text>
-                    <Text style={styles.infoData}>{room.data.rentPeriod.startDate.toString().slice(0,10)} ~ {room.data.rentPeriod.endDate.toString().slice(0,10)}</Text>
+                    <Text style={styles.infoData}>{room.data.type.category=="단기임대" ? room.data.rentPeriod.startDate.toString().slice(0,10)+"~"+room.data.rentPeriod.endDate.toString().slice(0,10)
+                                                                                    : room.data.rentPeriod.startDate.toString().slice(0,10)}</Text>
                 </View>
                 <View style={styles.info}>
                     <Text style={styles.infoComp}>층수</Text>
@@ -157,7 +158,7 @@ export default function RoomPage({navigation, route}) {
                 </View>
                 <View style={styles.info}>
                     <Text style={styles.infoComp}>월세</Text>
-                    <Text style={styles.infoData}>{room.data.price.monthly+" 만원"}</Text>
+                    <Text style={styles.infoData}>{room.data.type.rentType=="전세" ? "0 만원" : room.data.price.monthly+" 만원"}</Text>
                 </View>
                 <View style={styles.info}>
                     <Text style={styles.infoComp}>관리비</Text>

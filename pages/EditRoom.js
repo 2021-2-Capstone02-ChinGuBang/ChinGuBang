@@ -380,7 +380,7 @@ export default function EditRoom({navigation, route}) {
     setQuery(route.params.content.data.information.query)
     setDescription(route.params.content.data.information.description)
     setDeposit(route.params.content.data.price.deposit)
-    setMonthly(route.params.content.data.price.monthly)
+    setMonthly(route.params.content.data.price.monthly==null ? 0 : route.params.content.data.price.monthly)
     setControl(route.params.content.data.price.control)
     setArea(route.params.content.data.information.area)
     setFloor(route.params.content.data.information.floor)
@@ -541,9 +541,10 @@ export default function EditRoom({navigation, route}) {
               <TextInput
               style={styles.basicInput}
               keyboardType="number-pad"
-              placeholder={route.params.content.data.price.monthly.toString()}
+              placeholder={rent=="전세" ? "전세 선택 시 비활성화" : route.params.content.data.price.monthly==null ? "0" : route.params.content.data.price.monthly.toString()}
               placeholderTextColor="#60605e"
               onChangeText={text=>setMonthly(text)}
+              editable={rent=="월세" ? true : false}
               />
               <Text style={styles.infoData}>만원</Text>
           </View>
