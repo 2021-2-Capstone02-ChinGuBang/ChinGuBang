@@ -39,7 +39,7 @@ export default function FilterPage({navigation,route}) {
   const [cond, setCond] = useState(false)
 
   const [room, setRoom] = useState([])
-  const [category, setCategory] = useState([])
+  const [category, setCategory] = useState(null)
   const [rent, setRent] = useState([])
   const [gender, setGender] = useState([])
   const [smoking, setSmoking] = useState([])
@@ -71,23 +71,26 @@ export default function FilterPage({navigation,route}) {
     setRoom(addConds(col,kind))
   }
   const methodColor = (i) =>{
-    let col = mcol.slice()
-    if(col[i]==0){
-      col[i] = 1
+    let col = [0,0]
+    col[i] = 1
+    setMcol(col)
+    setCategory(method[i])
+    // 양도 선택시 성별, 흡연여부 고정
+    // 교수님 피드백 반영으로 고정 해제
+    // if(i==1){
+    //   setCond(true);
+    //   sexColor(2)
+    //   cigarColor(1)
+    // }else{
+    //   setCond(false);
+    // }
+    if(i==1){
+      setDateCond(true)
+      Alert.alert("양도 선택 시 원 임차인(집주인)과의 계약을 상정하므로 마감(?) 날짜 선택이 비활성화 됩니다.")
     }
     else{
-      col[i]=0
+      setDateCond(false)
     }
-    setMcol(col)
-    setCategory(addConds(col,method))
-
-    // if(i==1){
-    //   setDateCond(true)
-    //   Alert.alert("양도 선택 시 원 임차인(집주인)과의 계약을 상정하므로 마감(?) 날짜 선택이 비활성화 됩니다.")
-    // }
-    // else{
-    //   setDateCond(false)
-    // }
   }
   const typeColor = (i) =>{
     let col = tcol.slice()
@@ -236,8 +239,8 @@ let form = {
       monthly : monthly,
     },
     rentPeriod:{
-      startDate : date1,
-      endDate : date2,
+      startDate : date1.toLocaleDateString(),
+      endDate : (category=="양도" ? null : date2.toLocaleDateString()),
     },
     options:{
       bed : options[0],
@@ -260,8 +263,6 @@ let form = {
       smoking : smoking,
     },
   }
-  
-  
   return (
     <ScrollView style = {styles.container}>
       <View style = {styles.components}>
@@ -520,6 +521,7 @@ let form = {
           console.log('Error', error.message);
         }
         console.log(error.config);
+        console.log("############Error################")
         //Alert.alert(JSON.stringify(error.response.status))
       })
   }}>
