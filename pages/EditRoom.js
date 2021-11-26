@@ -767,7 +767,7 @@ export default function EditRoom({navigation, route}) {
         })
         .then(function(res){
           //console.log(res)
-          Alert.alert(String(date1.getMonth()+1) +"/"+ String(date1.getDate()) +"/"+ String(date1.getFullYear()))
+          //Alert.alert(String(date1.getMonth()+1) +"/"+ String(date1.getDate()) +"/"+ String(date1.getFullYear()))
           navigation.navigate('MainPage',{u_token : ut, rooms: res.data.data.rooms, newMsg: res.data.data.newMessageNum})
         })
         Alert.alert("방이 정상적으로 수정되었습니다.")
