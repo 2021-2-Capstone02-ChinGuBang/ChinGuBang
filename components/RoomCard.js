@@ -108,7 +108,8 @@ export default function RoomCard({content,navigation,ut,auth}) {
                 <View style={styles.c3}>
                     <View style={styles.kind}><Text style={styles.kindtext}>{content.type.roomType}</Text></View>
                     <View style={styles.method}><Text style={styles.methodtext}>{content.type.category}</Text></View>
-                    <TouchableOpacity style={{width:35,height:35}} onPress={()=>{like ? setLike(false) : setLike(true);
+                    <TouchableOpacity style={{width:35,height:35}} disabled={auth==-1} onPress={()=>{
+                                                                like ? setLike(false) : setLike(true)
                                                                 axios.post(`http://54.180.160.150:5000/api/v1/room/like/`+ID,null,{
                                                                   headers:{
                                                                       Authorization:u_t,
