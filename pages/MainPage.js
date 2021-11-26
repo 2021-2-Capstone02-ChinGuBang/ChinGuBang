@@ -39,6 +39,7 @@ export default function MainPage({navigation,route}) {
   const [colour1,setColours1]=useState("#D84315")
   const onPressHandler1=color=>{
     if (color==="#D84315"){
+      //console.log(color==="#D84315")
       setColours1("#C4C4C4")
     }
     else{
@@ -167,7 +168,10 @@ export default function MainPage({navigation,route}) {
               //title={content.rentPeriod.startDate}
               //description={content.type.category=="양도" ? "~" : content.rentPeriod.endDate}
               pinColor={content.type.category=="양도" ? colour2 : colour1}
-              onPress={()=>{setModalVisible(!modalVisible)
+              tappable={true}
+              //{content.type.categpry=="양도" ? (colour2==="#D83415") : (colour1==="#D83415")}
+              onPress={()=>{
+                setModalVisible(!modalVisible)
                 setModalRoom(i)
               }}
             />
