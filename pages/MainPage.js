@@ -23,6 +23,7 @@ export default function MainPage({navigation,route}) {
   const [touchable, setTouchable] = useState(false)
   const [newMsg, setNewMsg] = useState(route.params.newMsg)
   useEffect(()=>{
+    //console.log(route.params.data.data)
     if(route.params.newMsg == -1){
       setTouchable(true)
       setNewMsg()
@@ -155,10 +156,10 @@ export default function MainPage({navigation,route}) {
       <MapView style={styles.map} 
       provider={PROVIDER_GOOGLE} 
       initialRegion={{
-        latitude: 37.50519,
-        longitude: 126.95709,
-        latitudeDelta: 0.00922,
-        longitudeDelta: 0.00421,
+        latitude: route.params.univ.lat,
+        longitude: route.params.univ.lng,
+        latitudeDelta: 0.01522,
+        longitudeDelta: 0.00721,
       }}>
         {
           rooms.map((content,i)=>{

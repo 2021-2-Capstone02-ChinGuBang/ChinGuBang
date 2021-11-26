@@ -495,7 +495,7 @@ let form = {
         //console.log(response)
         console.log("##############필터####################")
         if(response.data.data.rooms.length!=0){
-          navigation.navigate("MainPage",{rooms: response.data.data.rooms, newMsg: response.data.data.newMessageNum, u_token : ut})
+          navigation.navigate("MainPage",{rooms: response.data.data.rooms, newMsg: response.data.data.newMessageNum, u_token : ut, univ:res.data.data.university})
           Alert.alert("필터가 적용되었습니다.")
         }
         else{

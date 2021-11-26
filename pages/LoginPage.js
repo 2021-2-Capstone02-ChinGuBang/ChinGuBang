@@ -98,7 +98,7 @@ const getItem = (item) => {
                 })
                 .then(function(res){
                   console.log(res)
-                  navigation.navigate('MainPage',{u_token : response.data.token, rooms: res.data.data.rooms, newMsg: -1, })
+                  navigation.navigate('MainPage',{u_token : response.data.token, rooms: res.data.data.rooms, newMsg: -1, univ:res.data.data.university })
                 })
               }
           })
@@ -149,7 +149,7 @@ const getItem = (item) => {
                                            })
                                            .then(function(res){
                                              console.log(res)
-                                             navigation.navigate('MainPage',{u_token : response.data.token, rooms: res.data.data.rooms, newMsg: res.data.data.newMessageNum})
+                                             navigation.navigate('MainPage',{u_token : response.data.token, rooms: res.data.data.rooms, newMsg: res.data.data.newMessageNum, univ:res.data.data.university})
                                            })
                                          }
                                         })
