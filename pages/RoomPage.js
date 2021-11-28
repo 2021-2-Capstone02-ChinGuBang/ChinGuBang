@@ -240,12 +240,12 @@ export default function RoomPage({navigation, route}) {
                     </Circle>
                 </MapView>
             </View>
-            <View style={styles.components}>
+            {/* <View style={styles.components}>
                 <Text style = {styles.subTitle}>360° 사진</Text>
                 <TouchableOpacity style={styles.mainImage}>
                     <Image source={roomImage} style={styles.mainImage}></Image>
                 </TouchableOpacity>
-            </View>
+            </View> */}
             <TouchableOpacity style = {styles.cButton} 
             // disabled={touch}
             onPress={()=>
