@@ -108,7 +108,11 @@ export default function RoomCard({content,navigation,ut,auth}) {
                 <View style={styles.c3}>
                     <View style={styles.kind}><Text style={styles.kindtext}>{content.type.roomType}</Text></View>
                     <View style={styles.method}><Text style={styles.methodtext}>{content.type.category}</Text></View>
-                    <TouchableOpacity style={{width:35,height:35}} disabled={auth==-1} onPress={()=>{
+                    <TouchableOpacity style={{width:35,height:35}} onPress={()=>{
+                                                              if(auth==-1){
+                                                                Alert.alert("대학생 인증을 해주세요!")
+                                                              }
+                                                              else{
                                                                 like ? setLike(false) : setLike(true)
                                                                 axios.post(`http://54.180.160.150:5000/api/v1/room/like/`+ID,null,{
                                                                   headers:{
@@ -123,7 +127,7 @@ export default function RoomCard({content,navigation,ut,auth}) {
                                                                   Alert.alert(res.message)
                                                                   console.log(res)
                                                                   console.log("u_t:",u_t)
-                                                                })}}>
+                                                                })}}}>
                       <View style={styles.heartImage}>
                             <Ionicons
                               name={like ? "ios-heart" : "ios-heart-outline"}

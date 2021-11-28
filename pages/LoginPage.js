@@ -98,7 +98,12 @@ const getItem = (item) => {
                 })
                 .then(function(res){
                   console.log(res)
+                  if(res.data.data.rooms.length>0){
                   navigation.navigate('MainPage',{u_token : response.data.token, rooms: res.data.data.rooms, newMsg: -1, univ:res.data.data.university })
+                  }
+                  else{
+                    Alert.alert("방이 없어요ㅜㅜ");
+                  }
                 })
               }
           })

@@ -86,7 +86,7 @@ export default function MainPage({navigation,route}) {
         }} 
         //disabled={touchable}
         onPress={()=>
-          touchable ? Alert.alert("대학생 등록을 해주세요!") : 
+          touchable ? Alert.alert("대학생 인증을 해주세요!") : 
           axios.get('http://54.180.160.150:5000/api/v1/message',{
           headers:{
               Authorization : ut
@@ -118,7 +118,7 @@ export default function MainPage({navigation,route}) {
         }} 
         // disabled={touchable}
         onPress={()=>
-          touchable ? Alert.alert("대학생 등록을 해주세요!") : 
+          touchable ? Alert.alert("대학생 인증을 해주세요!") : 
           axios.get('http://54.180.160.150:5000/api/v1/user',{
           headers: {
             Authorization : ut
@@ -166,11 +166,7 @@ export default function MainPage({navigation,route}) {
             return(
             <Marker
               coordinate={{latitude: parseFloat(content.information.lat), longitude: parseFloat(content.information.lng)}}
-              //title={content.rentPeriod.startDate}
-              //description={content.type.category=="양도" ? "~" : content.rentPeriod.endDate}
               pinColor={content.type.category=="양도" ? colour2 : colour1}
-              tappable={true}
-              //{content.type.categpry=="양도" ? (colour2==="#D83415") : (colour1==="#D83415")}
               onPress={()=>{
                 setModalVisible(!modalVisible)
                 setModalRoom(i)
@@ -291,7 +287,7 @@ export default function MainPage({navigation,route}) {
       <TouchableOpacity style={[styles.condition,{position:'absolute',
         right:10,
         top:95,width:60,flexDirection:"row",backgroundColor:"#fff",borderWidth:2,borderRadius:5,borderColor:"#D84315"}]}
-        onPress={()=>{navigation.navigate('전체 필터',{u_token:ut})}}>
+        onPress={()=>{setReady(true); navigation.navigate('전체 필터',{u_token:ut})}}>
           <Image source={filter} style={{alignSelf:"center"}}/>
           <Text style={styles.conditionText}>필터</Text>
         </TouchableOpacity>
@@ -305,7 +301,7 @@ export default function MainPage({navigation,route}) {
       }]}
       // disabled={touchable}
       onPress={()=>{
-        touchable ? Alert.alert("대학생 등록을 해주세요!") : 
+        touchable ? Alert.alert("대학생 인증을 해주세요!") : 
         navigation.navigate('방 내놓기', {u_token : ut})}}>
         <Image source={homeplus} style={{
           flex:2,

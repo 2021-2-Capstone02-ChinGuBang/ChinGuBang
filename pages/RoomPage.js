@@ -250,7 +250,7 @@ export default function RoomPage({navigation, route}) {
             // disabled={touch}
             onPress={()=>
             {   
-                touch ? Alert.alert("대학생 등록을 해주세요!") : 
+                touch ? Alert.alert("대학생 인증을 해주세요!") : 
                 //console.log("ut 확인용",ut)
                 navigation.navigate("쪽지 보내기",{user_id:ut, roomID:room.data.roomID, rcID:room.data.user.userID})
             }}>
