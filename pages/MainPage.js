@@ -160,7 +160,9 @@ export default function MainPage({navigation,route}) {
         longitude: route.params.univ.lng,
         latitudeDelta: 0.01522,
         longitudeDelta: 0.00721,
-      }}>
+      }}
+      zoomEnabled = {false}
+      >
         {
           rooms.map((content,i)=>{
             return(

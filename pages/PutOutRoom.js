@@ -236,7 +236,7 @@ export default function PutOutRoom({navigation, route}) {
     // }
     if(i==1){
       setDateCond(true)
-      Alert.alert("양도 선택 시 원 임차인(집주인)과의 계약을 상정하므로 마감(?) 날짜 선택이 비활성화 됩니다.")
+      Alert.alert("양도 선택 시 원 임대인(집주인)과의 계약을 상정하므로 마감 날짜 선택이 비활성화 됩니다.")
     }
     else{
       setDateCond(false)
@@ -473,7 +473,7 @@ export default function PutOutRoom({navigation, route}) {
             //console.log(JSON.stringify(data.address))
             setPost(data.address)
             //navigation.navigate('방 내놓기'),{"postcode": data.address}
-            setQuery(data.query)
+            setQuery(data.sido+" "+data.sigungu+" "+data.bname)
             Alert.alert("주소 선택 완료!",data.address);
           }}
       />
@@ -730,7 +730,7 @@ export default function PutOutRoom({navigation, route}) {
         })
         .then(function(res){
           console.log(res)
-          navigation.navigate('MainPage',{u_token : ut, rooms: res.data.data.rooms, newMsg: res.data.data.newMessageNum})
+          navigation.navigate('MainPage',{u_token : ut, rooms: res.data.data.rooms, newMsg: res.data.data.newMessageNum, univ: res.data.data.university})
         })
         Alert.alert("방이 정상적으로 등록되었습니다.")
         console.log("ut 왜 아안 돼?: ",ut)

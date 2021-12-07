@@ -79,7 +79,7 @@ const ItemSeparatorView = () => {
 
 const getItem = (item) => {
   // Function for click on an item
-  alert(item.name);
+
   setname(item.name)
   setmail(item.mail)
   axios.post(`http://54.180.160.150:5000/api/v1/auth/public`, {
@@ -99,10 +99,11 @@ const getItem = (item) => {
                 .then(function(res){
                   console.log(res)
                   if(res.data.data.rooms.length>0){
-                  navigation.navigate('MainPage',{u_token : response.data.token, rooms: res.data.data.rooms, newMsg: -1, univ:res.data.data.university })
+                    alert(item.name);
+                    navigation.navigate('MainPage',{u_token : response.data.token, rooms: res.data.data.rooms, newMsg: -1, univ:res.data.data.university })
                   }
                   else{
-                    Alert.alert("방이 없어요ㅜㅜ");
+                    Alert.alert("등록된 방이 없습니다.");
                   }
                 })
               }
