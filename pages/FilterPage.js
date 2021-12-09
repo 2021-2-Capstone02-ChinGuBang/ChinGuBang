@@ -86,7 +86,7 @@ export default function FilterPage({navigation,route}) {
     // }
     if(i==1){
       setDateCond(true)
-      Alert.alert("양도 선택 시 원 임차인(집주인)과의 계약을 상정하므로 마감(?) 날짜 선택이 비활성화 됩니다.")
+      Alert.alert("양도 선택 시 원 임대인(집주인)과의 계약을 상정하므로 마감 날짜 선택이 비활성화 됩니다.")
     }
     else{
       setDateCond(false)
@@ -491,8 +491,8 @@ let form = {
         }
       })
       .then(function(response){
-        console.log(form)
-        //console.log(response)
+        //console.log(form)
+        console.log(response.data)
         console.log("##############필터####################")
         if(response.data.data.rooms.length!=0){
           console.log(response.data.data.rooms)

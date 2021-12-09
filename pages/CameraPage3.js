@@ -32,7 +32,7 @@ export default function CameraPage3({navigation}) {
         navigation.navigate('방 내놓기',{"image3":image.uri, "base3":image.base64})
         // console.log(image.uri)
         // console.log(image.base64)
-        alert("사진이 등록되었습니다!");
+        //alert("사진이 등록되었습니다!");
 			}
 		}
 	}

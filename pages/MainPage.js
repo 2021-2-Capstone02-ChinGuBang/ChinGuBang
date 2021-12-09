@@ -15,6 +15,7 @@ import RoomCard from '../components/RoomCard';
 export default function MainPage({navigation,route}) {
   //유저 토큰
   let mApiKey = 'AIzaSyA-TBtTOWILp1wUABnai9adbbJMgcPP008'
+  const [ready,setReady] = useState(true)
   const [modalVisible, setModalVisible] = useState(false);
   const [modalRoom,setModalRoom]=useState(0);
   const [ut,setut]=useState("")
@@ -32,7 +33,7 @@ export default function MainPage({navigation,route}) {
     setut(route.params.u_token)
     setRoom(route.params.rooms)
     setReady(false)
-    
+    console.log("############MAIN################")
     console.log(rooms)
     }
   },[isFocused])
@@ -57,7 +58,6 @@ export default function MainPage({navigation,route}) {
     }
   }
   const [rooms,setRoom]=useState([])
-  const [ready,setReady] = useState(true)
   const [mark, setMark] = useState([])
   
   return ready ? <Loading/> : (

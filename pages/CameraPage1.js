@@ -32,7 +32,7 @@ export default function CameraPage1({navigation}) {
         navigation.navigate('방 내놓기',{"image1":image.uri, "base1":image.base64})
         //console.log(image.uri)
         //console.log(image.base64)
-        alert("사진이 등록되었습니다!");
+        //alert("사진이 등록되었습니다!");
 			}
 		}
 	}
@@ -55,7 +55,7 @@ export default function CameraPage1({navigation}) {
            if (!pickimage.cancelled) {
             navigation.navigate('방 내놓기',{"image1":pickimage.uri, "base1":pickimage.base64})
             //console.log(JSON.stringify(pickimage))
-            alert("사진이 등록되었습니다!");
+            //alert("사진이 등록되었습니다!");
            }
         }
       }

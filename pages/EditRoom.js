@@ -128,7 +128,7 @@ export default function EditRoom({navigation, route}) {
     const currentDate = selectedDate || date1;
     setShow(Platform.OS === 'ios');
     setDate1(currentDate);
-    setDate2(currentDate)
+    //setDate2(currentDate)
   };
   const onChange2 = (event, selectedDate) => {
     const currentDate = selectedDate || date2;
@@ -732,7 +732,7 @@ export default function EditRoom({navigation, route}) {
           </TouchableOpacity>
         </ScrollView>
       </View>
-      <View style = {styles.components}>
+      {/* <View style = {styles.components}>
         <Text style = {styles.subTitle}>360° 방 사진</Text>
         <Text style = {styles.detailText}>
         VR 카메라를 이용해 촬영하거나 '구글 스트리트 뷰' 앱으로 제작하세요.{"\n"}
@@ -745,7 +745,7 @@ export default function EditRoom({navigation, route}) {
             marginTop:100,
           }}></Image>
         </TouchableOpacity>
-      </View>
+      </View> */}
       <TouchableOpacity style = {styles.cButton} onPress={()=>
       axios.get('https://maps.google.com/maps/api/geocode/json?address=' + post + '&key=' + mApiKey + '&language=ko')
       .then(function(res){
