@@ -40,7 +40,8 @@ export default function PutOutRoom({navigation, route}) {
   const [img3,setImg3] = useState("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSl93ASaa2NdIwZutsY6l82DpqvKCI5B43XBQ&usqp=CAU")
   const [img4,setImg4] = useState("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSl93ASaa2NdIwZutsY6l82DpqvKCI5B43XBQ&usqp=CAU")
   const [img5,setImg5] = useState("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSl93ASaa2NdIwZutsY6l82DpqvKCI5B43XBQ&usqp=CAU")
-  
+  const [ready,setReady] = useState(false)
+
   //유저 토큰
   const [ut,setut]=useState(route.params.u_token)
   useEffect(()=>{
@@ -356,7 +357,7 @@ export default function PutOutRoom({navigation, route}) {
   form.append('information[query]',query)
   form.append('information[description]',description)
   form.append('rentPeriod[startDate]',String(date1.getMonth()+1) +"/"+ String(date1.getDate()) +"/"+ String(date1.getFullYear()))
-  form.append('rentPeriod[endDate]',String(date1.getMonth()+1) +"/"+ String(date1.getDate()) +"/"+ String(date1.getFullYear()))
+  form.append('rentPeriod[endDate]',String(date2.getMonth()+1) +"/"+ String(date2.getDate()) +"/"+ String(date2.getFullYear()))
   form.append('options[bed]',options[0])
   form.append('options[table]',options[1])
   form.append('options[refrigerator]',options[2])
@@ -381,7 +382,7 @@ export default function PutOutRoom({navigation, route}) {
  
 
 
-  return (
+  return ready ? <Loading/> : (
     <ScrollView style = {styles.container}>
       <View style = {styles.components}>
         <Text style = {styles.subTitle}>매물 종류</Text>
@@ -710,6 +711,8 @@ export default function PutOutRoom({navigation, route}) {
         </TouchableOpacity>
       </View> */}
       <TouchableOpacity style = {styles.cButton} onPress={()=>
+      {
+      setReady(true);
       axios.get('https://maps.google.com/maps/api/geocode/json?address=' + post + '&key=' + mApiKey + '&language=ko')
       .then(function(res){
         console.log(res)
@@ -733,6 +736,7 @@ export default function PutOutRoom({navigation, route}) {
           navigation.navigate('MainPage',{u_token : ut, rooms: res.data.data.rooms, newMsg: res.data.data.newMessageNum, univ: res.data.data.university})
         })
         Alert.alert("방이 정상적으로 등록되었습니다.")
+        setReady(false);
         console.log("ut 왜 아안 돼?: ",ut)
       })
       .catch(function(error) {
@@ -756,7 +760,7 @@ export default function PutOutRoom({navigation, route}) {
         console.log("ut 왜 아안 돼?: ",ut)
         //Alert.alert(JSON.stringify(error.response.status))
       })})
-
+    }
       }>
         <Text style = {styles.cText}>방 내놓기</Text>
       </TouchableOpacity>

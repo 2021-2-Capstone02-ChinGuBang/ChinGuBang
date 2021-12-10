@@ -55,7 +55,7 @@ export default function CameraPage5({navigation}) {
            if (!pickimage.cancelled) {
             navigation.navigate('방 내놓기',{"image5":pickimage.uri, "base5":pickimage.base64})
             //console.log(JSON.stringify(pickimage))
-            alert("사진이 등록되었습니다!");
+            //alert("사진이 등록되었습니다!");
            }
         }
       }

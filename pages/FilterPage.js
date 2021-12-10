@@ -20,6 +20,7 @@ import cctv from "../assets/cctv.png"
 import parking from "../assets/parking.png"
 import elevator from "../assets/elevator.png"
 import stove from "../assets/stove.png"
+import Loading from '../components/Loading'
 
 
 
@@ -37,6 +38,7 @@ export default function FilterPage({navigation,route}) {
   const [monthly, setMonthly] = useState(10000000)
   const [dateCond, setDateCond] = useState(false)
   const [cond, setCond] = useState(false)
+  const [ready,setReady] = useState(false)
 
   const [room, setRoom] = useState([])
   const [category, setCategory] = useState(null)
@@ -263,7 +265,7 @@ let form = {
       smoking : smoking,
     },
   }
-  return (
+  return ready ? <Loading/> : (
     <ScrollView style = {styles.container}>
       <View style = {styles.components}>
         <Text style = {styles.subTitle}>매물 종류</Text>
@@ -483,7 +485,7 @@ let form = {
     // setRent(addConds(tcol,type))
     // setGender(addConds(scol,sex))
     // setSmoking(addConds(ccol,cigar))
-
+    setReady(true)
     axios.post(`http://54.180.160.150:5000/api/v1/room/filter`,form,{
         headers: {
           Authorization : ut,
@@ -497,10 +499,12 @@ let form = {
         if(response.data.data.rooms.length!=0){
           console.log(response.data.data.rooms)
           navigation.navigate("MainPage",{rooms: response.data.data.rooms, newMsg: response.data.data.newMessageNum, u_token : ut, univ:response.data.data.university})
+          setReady(false)
           Alert.alert("필터가 적용되었습니다.")
         }
         else{
           console.log(response.data)
+          setReady(false)
           Alert.alert("해당되는 방이 없습니다. 다시 필터링해주세요.")
         }
       })
